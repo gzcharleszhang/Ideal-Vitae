@@ -24,28 +24,26 @@ class Login extends Component {
 
   handleSubmit = event => {
       event.preventDefault();
+      // TODO: use axios to make req to server
   }
 
   render() {
     return (
-      <Form>
-        <Form.Group controlId="email">
+      <Form onSubmit = { this.handleSubmit }>
+        <Form.Group controlId = "email">
           <Form.Label>Email address</Form.Label>
-          <Form.Control autoFocus type="email" placeholder="Enter email" value={this.state.email} onChange={this.handleChange} />
-          <Form.Text className="text-muted">
+          <Form.Control autoFocus type = "email" placeholder = "Enter email" value = { this.state.email } onChange = { this.handleChange } />
+          <Form.Text className = "text-muted">
             Use the email you signed up with!
           </Form.Text>
         </Form.Group>
 
-        <Form.Group controlId="password">
+        <Form.Group controlId = "password">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} />
-        </Form.Group>
-        <Form.Group controlId="formBasicChecbox">
-          <Form.Check type="checkbox" label="Check me out" />
+          <Form.Control type = "password" placeholder = "Password" value = { this.state.password } onChange = { this.handleChange } />
         </Form.Group>
         // Add an option to reset password/register
-        <Button block disabled={!this.validateForm()} variant="primary" type="submit">
+        <Button block disabled = { !this.validateForm() } variant = "primary" type = "submit">
           Submit
         </Button>
       </Form>
