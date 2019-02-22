@@ -1,22 +1,40 @@
 // this file will be used to route all calls to the backend
-const express = require("express");
+const express = require("express");S
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const localStrategy = require('passport-local').Strategy;
+const bycrypt = require('bycrpt');
+const config = require('./config/config.js');
+const mongodb = require('./components/database.js');
 
-// will need routes for login, register, make resume, add content, edit content, remove info, replace basic info
+// passport will store the serialized info in the cookies
+passport.serializeUser((user, done) => {
+  let userObj = {
+    username: user.username
+  };
+  done(null, userObj);
+});
 
-// look into pools for db connection (make connection here then pass it along)
-
-// start simple w/ username/password auth then proceed to try other things
-
-// do research on proper ways to structure database / code base before starting to write code
-
-// keep trying stuff on the test repo to save time in the future
-
-// files needed for auth/login things, resume saving/adding info, more to discuss later
+passport.deserializeUser((info, done) => {
+    done(null, info);
+    return;
+});
 
 // make the server
 const app = express();
 
-// middleware (add some more later)
+// middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
+
+app.use(session(config.session));
+
+app.use(passport.initialize());
+
+app.use(passport.session());
+
 app.use((req, res, next) => {
   res.status(404).send("No such endpoint!");
 });
