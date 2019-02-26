@@ -8,8 +8,12 @@ class Database {
   }
 
   _connect() {
-    mongoose.connect(config.databaseConnection, {useNewUrlParser: true})
+    mongoose.connect(config.databaseConnection,
+      { useNewUrlParser: true,
+        useFindAndModify: false,
+        useCreateIndex: true})
     .then(() => {
+
       const db = mongoose.connection;
 			db.on('error', console.error.bind(console, 'connection error:'));
       db.once('open', () => {

@@ -8,6 +8,7 @@ const mongodb = require('./components/database.js');
 //const auth = require('./components/authentication.js');
 const bcrypt = require('bcrypt');
 const localStrategy = require('passport-local').Strategy;
+const userSchema = require('./components/models/userSchema.js');
 
 // config the local strategy for passport
 passport.use(new localStrategy(
@@ -19,10 +20,12 @@ passport.use(new localStrategy(
         return done(null, false, {message: 'Invalid credentials.\n'});
       }
       // since username is unique it should be the first one
-      const userInfo = await bcrypt.compare(password, response[0].password);
+      const user = response[0];
+      const userInfo = await bcrypt.compare(password, user.password);
       if (!userInfo) {
         return done(null, false, {message: 'Invalid credentials.\n'});
       }
+      console.log('Success');
       return done(null, user);
     } catch (error) {
       return done(error);
@@ -57,9 +60,9 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   res.status(404).send("No such endpoint!");
-});
+}); */
 
 app.use((error, req, res, next) => {
   console.error(error.stack)
@@ -75,6 +78,7 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res, next) => {
   // have a wrapper to  deal with issue later
+  console.log("In login!!");
   passport.authenticate('local', async (error, user, info) => {
     try {
       if (info) return res.send(info.message);
@@ -84,6 +88,7 @@ app.post('/login', (req, res, next) => {
         if (error) {
           return next(error);
         }
+        res.status(200).send("Authenticated.")
       });
     } catch (error) {
       return next(error);
@@ -95,10 +100,10 @@ app.post('/login', (req, res, next) => {
 app.get('/authrequired', async (req, res, next) => {
   // used later for authentication
   if (req.user) {
-    res.status(200);
+    res.status(200).send('Authenticated');
     return;
   }
-  res.status(400);
+  res.status(400).send('Requires authentication');
 });
 
 app.post('/register', (res, req) => {
@@ -118,6 +123,7 @@ app.get('/generateResume', (req, res) => {
 });
 
 // for now listen to local LocalHOst
-app.listen(3001, () => {
+app.listen(3000, () => {
   // something
+  console.log("listening on 3000!");
 });
