@@ -54,20 +54,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
+app.use((error, req, res, next) => {
+  console.error(error.stack)
+  res.status(500).send({error: 'There was an issue.'});
+});
+
 app.use(session(config.session));
 
 app.use(passport.initialize());
 
 app.use(passport.session());
 
-/*app.use((req, res, next) => {
-  res.status(404).send("No such endpoint!");
-}); */
-
-app.use((error, req, res, next) => {
-  console.error(error.stack)
-  res.status(500).send('There was an issue.');
-});
 
 // routes
 app.get('/', (req, res) => {
@@ -77,8 +74,7 @@ app.get('/', (req, res) => {
 /* Will add pools after everything is working so will pretend it is implemented */
 
 app.post('/login', (req, res, next) => {
-  // have a wrapper to  deal with issue later
-  console.log("In login!!");
+  // should i check if they are already logged in?
   passport.authenticate('local', async (error, user, info) => {
     try {
       if (info) return res.send(info.message);
@@ -94,11 +90,9 @@ app.post('/login', (req, res, next) => {
       return next(error);
     }
   })(req, res, next);
-  // insert passport js authentication
 });
 
 app.get('/authrequired', async (req, res, next) => {
-  // used later for authentication
   if (req.user) {
     res.status(200).send('Authenticated');
     return;
@@ -120,6 +114,10 @@ app.post('/editEntry', (req, res) => {
 
 app.get('/generateResume', (req, res) => {
   // should send back a json type object
+});
+
+app.post('*', (req, res, next) => {
+  res.status(404).send({error: "Undefined endpoint was reached"});
 });
 
 // for now listen to local LocalHOst

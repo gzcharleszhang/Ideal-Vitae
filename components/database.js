@@ -7,22 +7,19 @@ class Database {
     this._connect();
   }
 
-  _connect() {
-    mongoose.connect(config.databaseConnection,
-      { useNewUrlParser: true,
-        useFindAndModify: false,
-        useCreateIndex: true})
-    .then(() => {
-
-      const db = mongoose.connection;
-			db.on('error', console.error.bind(console, 'connection error:'));
-      db.once('open', () => {
-
-      });
-    })
-    .catch(err => {
-      console.error("error");
-    });
+  async _connect() {
+    try {
+      await mongoose.connect(config.databaseConnection,
+        { useNewUrlParser: true,
+          useFindAndModify: false,
+          useCreateIndex: true,
+          poolSize: 10});
+        const db = mongoose.connection;
+  			db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', console.log.bind(console, 'connection successful'));
+    } catch (error) {
+      console.error({error:  "Connection failed"});
+    }
   }
 };
 
