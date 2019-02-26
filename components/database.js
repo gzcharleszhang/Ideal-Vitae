@@ -8,7 +8,7 @@ class Database {
   }
 
   _connect() {
-    mongoose._connect(config.databaseConnection, {useNewUrlParser: true})
+    mongoose.connect(config.databaseConnection, {useNewUrlParser: true})
     .then(() => {
       const db = mongoose.connection;
 			db.on('error', console.error.bind(console, 'connection error:'));
