@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
-    required: true    
+    required: true
   },
   email: {
     type: String,
@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String
+  },
+  verified: {
+    type: Boolean
   },
   sectionOfResume: [{
     topic: {

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./config/config.js');
 const mongodb = require('./components/database.js');
-//const auth = require('./components/authentication.js');
+const authRegister = require('./components/authentication.js');
 const bcrypt = require('bcrypt');
 const localStrategy = require('passport-local').Strategy;
 const userSchema = require('./components/models/userSchema.js');
@@ -16,7 +16,7 @@ passport.use(new localStrategy(
   async (username, password, done) => {
     try {
       const response = await userSchema.find({username: username});
-      if (!(response || response[0])) {
+      if (!(response && response[0])) {
         return done(null, false, {message: 'Invalid credentials.\n'});
       }
       // since username is unique it should be the first one
@@ -100,8 +100,24 @@ app.get('/authrequired', async (req, res, next) => {
   res.status(400).send('Requires authentication');
 });
 
-app.post('/register', (res, req) => {
-  // will add new user
+app.post('/register', async (req, res, next) => {
+  try {
+    const user = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      verified: false
+    };
+    console.log(user);
+    const result = await authRegister(mongodb, user);
+    if (result.error) {
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.post('/additionalEntry', (req, res) => {

@@ -9,14 +9,11 @@ class Database {
 
   async _connect() {
     try {
-      await mongoose.connect(config.databaseConnection,
-        { useNewUrlParser: true,
-          useFindAndModify: false,
-          useCreateIndex: true,
-          poolSize: 10});
-        const db = mongoose.connection;
-  			db.on('error', console.error.bind(console, 'connection error:'));
-        db.once('open', console.log.bind(console, 'connection successful'));
+      await mongoose.connect(config.database.connection,
+                             config.database.requirements);
+      const db = mongoose.connection;
+  		db.on('error', console.error.bind(console, 'connection error:'));
+      db.once('open', console.log.bind(console, 'connection successful'));
     } catch (error) {
       console.error({error:  "Connection failed"});
     }
