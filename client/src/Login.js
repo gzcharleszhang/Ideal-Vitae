@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
 class Login extends Component {
@@ -10,6 +11,7 @@ class Login extends Component {
       email: "",
       password: ""
     };
+
   }
 
   validateForm = () => {
@@ -22,9 +24,26 @@ class Login extends Component {
     });
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
+  const  info = {
+      email: this.state.email,
+      password: this.state.password,
+      username: this.state.email
+    };
+      alert(info.email);
       event.preventDefault();
+      console.log("wdwd");
       // TODO: use axios to make req to server
+      try {
+      const response = await axios({
+        method: 'post',
+        url: 'http://127.0.0.1:2002/login',
+        data: info,
+        withCredentials: false
+      });
+    console.log(response);
+  } catch (e) {
+          alert(`HI again ${e}`);}
   }
 
   render() {

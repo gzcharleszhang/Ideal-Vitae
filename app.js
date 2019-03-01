@@ -8,6 +8,7 @@ const mongodb = require('./components/database.js');
 const authRegister = require('./components/authentication.js');
 const bcrypt = require('bcrypt');
 const localStrategy = require('passport-local').Strategy;
+const cors = require('cors')
 const userSchema = require('./components/models/userSchema.js');
 
 // config the local strategy for passport
@@ -64,6 +65,8 @@ app.use(session(config.session));
 app.use(passport.initialize());
 
 app.use(passport.session());
+
+app.use(cors());
 
 
 // routes
@@ -137,7 +140,7 @@ app.post('*', (req, res, next) => {
 });
 
 // for now listen to local LocalHOst
-app.listen(3000, () => {
+app.listen(2002, () => {
   // something
   console.log("listening on 3000!");
 });
