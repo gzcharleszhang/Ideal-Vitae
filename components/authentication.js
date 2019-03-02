@@ -10,12 +10,9 @@ const authRegister = async (dbConn, user) => {
     user.password = await bcrypt.hash(user.password, config.rptNumber);
     console.log(user);
     const newUser = new userSchema(user);
-    console.log("MPassword  MAde");
     const result = await newUser.save();
-    console.log('Retrungggs;');
-    return {result: true};
+    return {isRegistered: true};
   } catch (error) {
-  console.log('Retruns;');
     return {error: error};
   }
 }

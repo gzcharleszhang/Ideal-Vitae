@@ -2,9 +2,16 @@ const mongoose = require('mongoose');
 
 // creating a schema for the users
 const userSchema = new mongoose.Schema({
-  username: {
+  firstName: {
     type: String,
-    unique: true,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  preferredName: {
+    type: String,
     required: true
   },
   email: {
@@ -18,6 +25,16 @@ const userSchema = new mongoose.Schema({
   verified: {
     type: Boolean
   },
+  contact: [{
+    type: {
+      type: String,
+      required: true
+    },
+    info: {
+      type: String,
+      required: true
+    }
+  }],
   sectionOfResume: [{
     topic: {
       type: String,

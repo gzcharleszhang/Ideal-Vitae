@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import {
+  Redirect
+} from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
@@ -9,7 +12,8 @@ class Login extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      verified: false
     };
 
   }
@@ -25,28 +29,39 @@ class Login extends Component {
   }
 
   handleSubmit = async event => {
-  const  info = {
-      email: this.state.email,
-      password: this.state.password,
-      username: this.state.email
-    };
-      alert(info.email);
-      event.preventDefault();
-      console.log("wdwd");
-      // TODO: use axios to make req to server
-      try {
+    event.preventDefault();
+    try {
+      const  loginInfo = {
+        email: this.state.email,
+        password: this.state.password
+      };
       const response = await axios({
         method: 'post',
         url: 'http://127.0.0.1:2002/login',
-        data: info,
+        data: loginInfo,
         withCredentials: false
       });
-    console.log(response);
-  } catch (e) {
-          alert(`HI again ${e}`);}
+      console.log("wuwufhwhfwhf");
+      console.log(response);
+      console.log(this.state.verified);
+      if (response.data.isAuthenticated) {
+        this.setState({
+          verified: true
+        });
+      } else {
+        alert(`Wrong credentials`);
+      }
+    } catch (error) {
+        alert(`There has been an error! Error: ${error}  Please try again later!`);
+    }
   }
 
   render() {
+
+    if (this.state.verified) {
+      return  <Redirect to='/' />;
+    }
+
     return (
       <Form onSubmit = { this.handleSubmit }>
         <Form.Group controlId = "email">

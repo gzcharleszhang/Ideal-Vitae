@@ -13,10 +13,10 @@ const userSchema = require('./components/models/userSchema.js');
 
 // config the local strategy for passport
 passport.use(new localStrategy(
-  {usernameField: "username"},
+  {usernameField: "email"},
   async (username, password, done) => {
     try {
-      const response = await userSchema.find({username: username});
+      const response = await userSchema.find({email: username});
       if (!(response && response[0])) {
         return done(null, false, {message: 'Invalid credentials.\n'});
       }
@@ -87,7 +87,7 @@ app.post('/login', (req, res, next) => {
         if (error) {
           return next(error);
         }
-        res.status(200).send("Authenticated.")
+        res.status(200).send({isAuthenticated: true});
       });
     } catch (error) {
       return next(error);
@@ -97,22 +97,25 @@ app.post('/login', (req, res, next) => {
 
 app.get('/authrequired', async (req, res, next) => {
   if (req.user) {
-    res.status(200).send('Authenticated');
+    res.status(200).send({isAuthenticated: true});
     return;
   }
-  res.status(400).send('Requires authentication');
+  res.status(400).send({isAuthenticated: false});
 });
 
 app.post('/register', async (req, res, next) => {
   try {
     const user = {
-      username: req.body.username,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      preferredName: req.body.preferredName,
       email: req.body.email,
       password: req.body.password,
       verified: false
     };
     console.log(user);
     const result = await authRegister(mongodb, user);
+    console.log(result);
     if (result.error) {
       res.status(400).send(result);
     } else {
