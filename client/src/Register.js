@@ -10,6 +10,7 @@ class Register extends Component {
   constructor(props) {
       super(props);
 
+      // all fields of the form and flag to check for proper registration
       this.state = {
         firstName: "",
         lastName: "",
@@ -28,6 +29,7 @@ class Register extends Component {
   }
 
   handleChange = event => {
+    // when change occurs update the states
     this.setState({
       [event.target.id]: event.target.value
     });
@@ -36,6 +38,7 @@ class Register extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     try {
+      // create an object to store the inputs from the form
       const registerInfo = {
         email: this.state.email,
         firstName: this.state.firstName,
@@ -43,6 +46,7 @@ class Register extends Component {
         preferredName: this.state.preferredName,
         password: this.state.password
       };
+      // post request to add the given info into the database
       const response = await axios({
           method: 'post',
           url: 'http://127.0.0.1:2002/register',
@@ -50,7 +54,9 @@ class Register extends Component {
           withCredentials: false
       });
       console.log(response);
+      // verifies if the registration was successful
       if (response.data.isRegistered) {
+        // will update the flag
         this.setState({
           registeredCorrectly: true
         });
@@ -64,11 +70,13 @@ class Register extends Component {
   }
   render() {
     // TODO: add more flags for already used email etc
+    // if flag triggers the user will be sent to the dashboard
     if (this.state.registeredCorrectly) {
       return  <Redirect to='/' />;
     }
 
     return (
+      // form that will take in the user name, email, and password
       <Form onSubmit = { this.handleSubmit }>
         <Form.Group autoFocus controlId = "firstName">
           <Form.Label> First Name </Form.Label>

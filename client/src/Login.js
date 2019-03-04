@@ -9,7 +9,7 @@ import {
 class Login extends Component {
   constructor(props) {
     super(props);
-
+    // holding state of input and flag
     this.state = {
       email: "",
       password: "",
@@ -24,6 +24,7 @@ class Login extends Component {
 
   handleChange = event => {
     this.setState({
+      // updates when change is made
       [event.target.id]: event.target.value
     });
   }
@@ -31,19 +32,22 @@ class Login extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     try {
+      // prepares log in credentials from input
       const  loginInfo = {
         email: this.state.email,
         password: this.state.password
       };
+      // post request to verify user
       const response = await axios({
         method: 'post',
         url: 'http://127.0.0.1:2002/login',
         data: loginInfo,
         withCredentials: false
       });
-      console.log("wuwufhwhfwhf");
+
       console.log(response);
       console.log(this.state.verified);
+      // checks if user is authenticated
       if (response.data.isAuthenticated) {
         this.setState({
           verified: true
@@ -57,12 +61,13 @@ class Login extends Component {
   }
 
   render() {
-
+    // if flag triggers the user will be directed to the dashboard
     if (this.state.verified) {
       return  <Redirect to='/' />;
     }
 
     return (
+      // will get the email and password
       <Form onSubmit = { this.handleSubmit }>
         <Form.Group controlId = "email">
           <Form.Label>Email address</Form.Label>

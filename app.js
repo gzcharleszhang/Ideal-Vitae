@@ -22,6 +22,7 @@ passport.use(new localStrategy(
       }
       // since username is unique it should be the first one
       const user = response[0];
+      // will compare the encrypted passwords
       const userInfo = await bcrypt.compare(password, user.password);
       if (!userInfo) {
         return done(null, false, {message: 'Invalid credentials.\n'});
@@ -55,13 +56,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
+// error handling
 app.use((error, req, res, next) => {
   console.error(error.stack)
-  res.status(500).send({error: 'There was an issue.'});
+  res.status(500).send({error: error.error});
 });
 
+// session should piggy back on cookies
 app.use(session(config.session));
 
+// passport will piggy back off express
 app.use(passport.initialize());
 
 app.use(passport.session());
@@ -77,12 +81,14 @@ app.get('/', (req, res) => {
 /* Will add pools after everything is working so will pretend it is implemented */
 
 app.post('/login', (req, res, next) => {
-  // should i check if they are already logged in?
+  // TODO checked if already logged in?
+  // standard passportjs custom callback login
   passport.authenticate('local', async (error, user, info) => {
     try {
+      // check for issues
       if (info) return res.send(info.message);
       if (error) throw error;
-      if (!user) return res.redirect('/login');
+    //  if (!user) return res.redirect('/login');
       req.login(user, async (error) => {
         if (error) {
           return next(error);
@@ -105,6 +111,7 @@ app.get('/authrequired', async (req, res, next) => {
 
 app.post('/register', async (req, res, next) => {
   try {
+    // initialize the user object to contain required credentials
     const user = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -113,9 +120,10 @@ app.post('/register', async (req, res, next) => {
       password: req.body.password,
       verified: false
     };
-    console.log(user);
+    // add the information to the database
     const result = await authRegister(mongodb, user);
-    console.log(result);
+
+    // check to see if the user has been registered
     if (result.error) {
       res.status(400).send(result);
     } else {
