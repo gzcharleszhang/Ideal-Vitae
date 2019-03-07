@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import './form.css'
 import Button from 'react-bootstrap/Button';
 import {
   Redirect
@@ -77,36 +78,38 @@ class Register extends Component {
 
     return (
       // form that will take in the user name, email, and password
-      <Form onSubmit = { this.handleSubmit }>
-        <Form.Group autoFocus controlId = "firstName">
-          <Form.Label> First Name </Form.Label>
-          <Form.Control placeholder = "Enter First Name" value = { this.state.firstName } onChange = { this.handleChange }/>
-        </Form.Group>
+      <div className = "formContainer">
+        <Form onSubmit = { this.handleSubmit }>
+          <Form.Group autoFocus controlId = "firstName">
+            <Form.Label> First Name </Form.Label>
+            <Form.Control placeholder = "Enter First Name" value = { this.state.firstName } onChange = { this.handleChange }/>
+          </Form.Group>
 
-        <Form.Group controlId = "lastName">
-          <Form.Label> Last Name </Form.Label>
-          <Form.Control placeholder = "Enter Last Name" value = { this.state.lastName } onChange = { this.handleChange }/>
-        </Form.Group>
+          <Form.Group controlId = "lastName">
+            <Form.Label> Last Name </Form.Label>
+            <Form.Control placeholder = "Enter Last Name" value = { this.state.lastName } onChange = { this.handleChange }/>
+          </Form.Group>
 
-        <Form.Group controlId = "preferredName">
-          <Form.Label> Preferred Name </Form.Label>
-          <Form.Control placeholder = "Enter Preferred Name" value = { this.state.preferredName } onChange = { this.handleChange }/>
-        </Form.Group>
+          <Form.Group controlId = "preferredName">
+            <Form.Label> Preferred Name </Form.Label>
+            <Form.Control placeholder = "Enter Preferred Name" value = { this.state.preferredName } onChange = { this.handleChange }/>
+          </Form.Group>
 
-        <Form.Group controlId = "email">
-          <Form.Label> Email Address </Form.Label>
-          <Form.Control type = "email" placeholder = "Enter Email" value = { this.state.email } onChange = { this.handleChange }/>
-        </Form.Group>
+          <Form.Group controlId = "email">
+            <Form.Label> Email Address </Form.Label>
+            <Form.Control type = "email" placeholder = "Enter Email" value = { this.state.email } onChange = { this.handleChange }/>
+          </Form.Group>
 
-        <Form.Group controlId = "password">
-          <Form.Label> Password </Form.Label>
-          <Form.Control type = "password" placeholder = "Enter Password" value = { this.state.password } onChange = { this.handleChange }/>
-        </Form.Group>
+          <Form.Group controlId = "password">
+            <Form.Label> Password </Form.Label>
+            <Form.Control type = "password" placeholder = "Enter Password" value = { this.state.password } onChange = { this.handleChange }/>
+          </Form.Group>
 
-        <Button block disabled = { !this.validateForm() } variant = "primary" type = "submit">
-        Sign Up
-        </Button>
-      </Form>
+          <Button block disabled = { !this.validateForm() } variant = "primary" type = "submit">
+          Sign Up
+          </Button>
+        </Form>
+      </div>
     );
   }
 }

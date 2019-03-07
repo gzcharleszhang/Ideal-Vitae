@@ -1,0 +1,8 @@
+.formContainer {
+  max-width: 35%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(255, 0, 0, 0.23);
+  margin: 5% auto;
+  padding: 1.5%;
+  border-radius: 25px;
+  background-color: white;
+}

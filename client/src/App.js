@@ -12,12 +12,14 @@ import Register from './Register';
 class App extends Component {
   render() {
     return (
-      <HashRouter>
-        <div>
-          <Route path="/login" component={Login}/>
-          <Route path ="/register" component={Register}/>
-        </div>
-      </HashRouter>
+      <div>
+        <HashRouter>
+          <div>
+            <Route path = "/login" component = {Login}/>
+            <Route path = "/register" component = {Register}/>
+          </div>
+        </HashRouter>
+      </div>
     );
   }
 }
