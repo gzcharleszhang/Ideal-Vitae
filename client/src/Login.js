@@ -19,6 +19,7 @@ class Login extends Component {
 
   }
 
+ // checking that users have input information
   validateForm = () => {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
@@ -68,6 +69,7 @@ class Login extends Component {
     }
 
     return (
+      // TODO: make a login form
       // will get the email and password
       <div className = "formContainer">
         <Form onSubmit = { this.handleSubmit }>
@@ -84,8 +86,7 @@ class Login extends Component {
             <Form.Control type = "password" placeholder = "Password" value = { this.state.password } onChange = { this.handleChange } />
           </Form.Group>
           // Add an option to reset password/register
-          <Button block disabled = { !this.validateForm() } variant = "primary" type = "submit">
-            Submit
+          <Button  block disabled = { !this.validateForm() } variant = "primary" type = "submit">Submit
           </Button>
         </Form>
       </div>

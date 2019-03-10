@@ -1,5 +1,5 @@
-const config = require('../config/config.js');
-const mongoose = require('mongoose');
+import config from '../config/config.js';
+import mongoose from 'mongoose';
 
 // use this for now until everything works then integrate pools
 class Database {
@@ -20,4 +20,4 @@ class Database {
   }
 };
 
-module.exports = new Database();
+export default new Database();

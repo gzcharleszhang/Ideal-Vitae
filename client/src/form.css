@@ -6,3 +6,10 @@
   border-radius: 25px;
   background-color: white;
 }
+
+.cleanButton {
+  background-color: white;
+  border-radius: 25px;
+  color: black;
+  border-color: black;
+}

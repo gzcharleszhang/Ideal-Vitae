@@ -1,7 +1,7 @@
 // connection should be passed
-const bcrypt = require('bcrypt');
-const userSchema = require('./models/userSchema.js');
-const config = require('../config/config.js');
+import bcrypt from 'bcrypt';
+import userSchema from './models/userSchema.js';
+import config from '../config/config.js';
 
 // will be called once all parts are accounted for
 const authRegister = async (dbConn, user) => {
@@ -18,4 +18,4 @@ const authRegister = async (dbConn, user) => {
   }
 }
 
-module.exports = authRegister;
+export { authRegister };

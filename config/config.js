@@ -1,8 +1,8 @@
-const uuid = require('uuid/v4');
+import uuid from 'uuid/v4';
 
 const config = {
   database: {
-    connection: "mongodb://127.0.0.1:27017/userDataz", // TODO: get mongo atlas set up
+    connection: "mongodb://127.0.0.1:27017/ourTim123e", // TODO: get mongo atlas set up
     requirements: { useNewUrlParser: true,
                     useFindAndModify: false,
                     useCreateIndex: true,
@@ -21,4 +21,4 @@ const config = {
 
 };
 
-module.exports = config;
+export default config;

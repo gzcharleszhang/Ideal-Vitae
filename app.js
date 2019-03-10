@@ -1,15 +1,14 @@
-// this file will be used to route all calls to the backend
-const express = require("express");
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const config = require('./config/config.js');
-const mongodb = require('./components/database.js');
-const authRegister = require('./components/authentication.js');
-const bcrypt = require('bcrypt');
+import express from 'express';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+import passport from 'passport';
+import config from './config/config.js';
+import mongodb from './components/database.js';
+import {authRegister} from './components/authentication.js';
+import bcrypt from 'bcrypt';
 const localStrategy = require('passport-local').Strategy;
-const cors = require('cors')
-const userSchema = require('./components/models/userSchema.js');
+import cors from 'cors';
+import userSchema from './components/models/userSchema.js';
 
 // config the local strategy for passport
 passport.use(new localStrategy(
@@ -122,7 +121,6 @@ app.post('/register', async (req, res, next) => {
     };
     // add the information to the database
     const result = await authRegister(mongodb, user);
-
     // check to see if the user has been registered
     if (result.error) {
       res.status(400).send(result);

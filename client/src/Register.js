@@ -77,6 +77,7 @@ class Register extends Component {
     }
 
     return (
+      // TODO: make a register form?
       // form that will take in the user name, email, and password
       <div className = "formContainer">
         <Form onSubmit = { this.handleSubmit }>
@@ -105,8 +106,7 @@ class Register extends Component {
             <Form.Control type = "password" placeholder = "Enter Password" value = { this.state.password } onChange = { this.handleChange }/>
           </Form.Group>
 
-          <Button block disabled = { !this.validateForm() } variant = "primary" type = "submit">
-          Sign Up
+          <Button block disabled = { !this.validateForm() } variant = "primary" type = "submit">Sign Up
           </Button>
         </Form>
       </div>
