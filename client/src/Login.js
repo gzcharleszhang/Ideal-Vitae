@@ -19,7 +19,7 @@ class Login extends Component {
 
   }
 
- // checking that users have input information
+  // checking that users have input information
   validateForm = () => {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
@@ -35,7 +35,7 @@ class Login extends Component {
     event.preventDefault();
     try {
       // prepares log in credentials from input
-      const  loginInfo = {
+      const loginInfo = {
         email: this.state.email,
         password: this.state.password
       };
@@ -58,35 +58,37 @@ class Login extends Component {
         alert(`Wrong credentials`);
       }
     } catch (error) {
-        alert(`There has been an error! Error: ${error}  Please try again later!`);
+      alert(`There has been an error! Error: ${error}  Please try again later!`);
     }
   }
 
   render() {
+
+    const { verified, email, password } = this.state;
     // if flag triggers the user will be directed to the dashboard
-    if (this.state.verified) {
-      return  <Redirect to='/' />;
+    if (verified) {
+      return <Redirect to='/' />;
     }
 
     return (
       // TODO: make a login form
       // will get the email and password
-      <div className = "formContainer">
-        <Form onSubmit = { this.handleSubmit }>
-          <Form.Group controlId = "email">
+      <div className="formContainer">
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group controlId="email">
             <Form.Label>Email address</Form.Label>
-            <Form.Control autoFocus type = "email" placeholder = "Enter email" value = { this.state.email } onChange = { this.handleChange } />
-            <Form.Text className = "text-muted">
+            <Form.Control autoFocus type="email" placeholder="Enter email" value={email} onChange={this.handleChange} />
+            <Form.Text className="text-muted">
               Use the email you signed up with!
             </Form.Text>
           </Form.Group>
 
-          <Form.Group controlId = "password">
+          <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control type = "password" placeholder = "Password" value = { this.state.password } onChange = { this.handleChange } />
+            <Form.Control type="password" placeholder="Password" value={password} onChange={this.handleChange} />
           </Form.Group>
           // Add an option to reset password/register
-          <Button  block disabled = { !this.validateForm() } variant = "primary" type = "submit">Submit
+          <Button block disabled={!this.validateForm()} variant="primary" type="submit">Submit
           </Button>
         </Form>
       </div>

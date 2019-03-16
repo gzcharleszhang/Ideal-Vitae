@@ -9,24 +9,25 @@ import {
 
 class Register extends Component {
   constructor(props) {
-      super(props);
+    super(props);
 
-      // all fields of the form and flag to check for proper registration
-      this.state = {
-        firstName: "",
-        lastName: "",
-        preferredName: "",
-        email: "",
-        password: "",
-        registeredCorrectly: false
-      };
+    // all fields of the form and flag to check for proper registration
+    this.state = {
+      firstName: "",
+      lastName: "",
+      preferredName: "",
+      email: "",
+      password: "",
+      registeredCorrectly: false
+    };
   }
 
   validateForm = () => {
+    const { registeredCorrectly, firstName, lastName, preferredName, email, password } = this.state;
     // TODO: Add criteras to password
     return this.state.email.length > 0 && this.state.password.length > 0
-          && this.state.firstName.length > 0 && this.state.lastName.length > 0
-          && this.state.preferredName.length > 0;
+      && this.state.firstName.length > 0 && this.state.lastName.length > 0
+      && this.state.preferredName.length > 0;
   }
 
   handleChange = event => {
@@ -49,10 +50,10 @@ class Register extends Component {
       };
       // post request to add the given info into the database
       const response = await axios({
-          method: 'post',
-          url: 'http://127.0.0.1:2002/register',
-          data: registerInfo,
-          withCredentials: false
+        method: 'post',
+        url: 'http://127.0.0.1:2002/register',
+        data: registerInfo,
+        withCredentials: false
       });
       console.log(response);
       // verifies if the registration was successful
@@ -70,43 +71,44 @@ class Register extends Component {
 
   }
   render() {
+    const { registeredCorrectly, firstName, lastName, preferredName, email, password } = this.state;
     // TODO: add more flags for already used email etc
     // if flag triggers the user will be sent to the dashboard
-    if (this.state.registeredCorrectly) {
-      return  <Redirect to='/' />;
+    if (registeredCorrectly) {
+      return <Redirect to='/' />;
     }
 
     return (
       // TODO: make a register form?
       // form that will take in the user name, email, and password
-      <div className = "formContainer">
-        <Form onSubmit = { this.handleSubmit }>
-          <Form.Group autoFocus controlId = "firstName">
+      <div className="formContainer">
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group autoFocus controlId="firstName">
             <Form.Label> First Name </Form.Label>
-            <Form.Control placeholder = "Enter First Name" value = { this.state.firstName } onChange = { this.handleChange }/>
+            <Form.Control placeholder="Enter First Name" value={firstName} onChange={this.handleChange} />
           </Form.Group>
 
-          <Form.Group controlId = "lastName">
+          <Form.Group controlId="lastName">
             <Form.Label> Last Name </Form.Label>
-            <Form.Control placeholder = "Enter Last Name" value = { this.state.lastName } onChange = { this.handleChange }/>
+            <Form.Control placeholder="Enter Last Name" value={lastName} onChange={this.handleChange} />
           </Form.Group>
 
-          <Form.Group controlId = "preferredName">
+          <Form.Group controlId="preferredName">
             <Form.Label> Preferred Name </Form.Label>
-            <Form.Control placeholder = "Enter Preferred Name" value = { this.state.preferredName } onChange = { this.handleChange }/>
+            <Form.Control placeholder="Enter Preferred Name" value={preferredName} onChange={this.handleChange} />
           </Form.Group>
 
-          <Form.Group controlId = "email">
+          <Form.Group controlId="email">
             <Form.Label> Email Address </Form.Label>
-            <Form.Control type = "email" placeholder = "Enter Email" value = { this.state.email } onChange = { this.handleChange }/>
+            <Form.Control type="email" placeholder="Enter Email" value={email} onChange={this.handleChange} />
           </Form.Group>
 
-          <Form.Group controlId = "password">
+          <Form.Group controlId="password">
             <Form.Label> Password </Form.Label>
-            <Form.Control type = "password" placeholder = "Enter Password" value = { this.state.password } onChange = { this.handleChange }/>
+            <Form.Control type="password" placeholder="Enter Password" value={password} onChange={this.handleChange} />
           </Form.Group>
 
-          <Button block disabled = { !this.validateForm() } variant = "primary" type = "submit">Sign Up
+          <Button block disabled={!this.validateForm()} variant="primary" type="submit">Sign Up
           </Button>
         </Form>
       </div>
