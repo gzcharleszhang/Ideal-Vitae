@@ -18,16 +18,26 @@ class Register extends Component {
       preferredName: "",
       email: "",
       password: "",
-      registeredCorrectly: false
+      registeredCorrectly: false,
+      correctEmailFormat: true,
+      correctPasswordFormat: true
     };
   }
 
   validateForm = () => {
-    const { registeredCorrectly, firstName, lastName, preferredName, email, password } = this.state;
+    const { registeredCorrectly, 
+            firstName, 
+            lastName, 
+            preferredName, 
+            email, 
+            password, 
+            correctEmailFormat, 
+            correctPasswordFormat} = this.state;
     // TODO: Add criteras to password
-    return this.state.email.length > 0 && this.state.password.length > 0
-      && this.state.firstName.length > 0 && this.state.lastName.length > 0
-      && this.state.preferredName.length > 0;
+    const isPasswordReqMet = /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
+    this.setState({
+      
+    });
   }
 
   handleChange = event => {
