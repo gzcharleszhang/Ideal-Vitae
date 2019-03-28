@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
-import axios from 'axios';
-import './form.css'
-import Button from 'react-bootstrap/Button';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import WarningText from './WarningText';
 import {
   Redirect
 } from "react-router-dom";
+import axios from 'axios';
+import './form.css'
 
 class Register extends Component {
   constructor(props) {
@@ -18,26 +20,12 @@ class Register extends Component {
       preferredName: "",
       email: "",
       password: "",
+      passwordCopy: "",
       registeredCorrectly: false,
-      correctEmailFormat: true,
-      correctPasswordFormat: true
+      isEmailProper: true,
+      isPasswordProper: true,
+      isPasswordsSame: true,
     };
-  }
-
-  validateForm = () => {
-    const { registeredCorrectly, 
-            firstName, 
-            lastName, 
-            preferredName, 
-            email, 
-            password, 
-            correctEmailFormat, 
-            correctPasswordFormat} = this.state;
-    // TODO: Add criteras to password
-    const isPasswordReqMet = /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
-    this.setState({
-      
-    });
   }
 
   handleChange = event => {
@@ -49,6 +37,23 @@ class Register extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+    const { email,
+            password,
+            passwordCopy } = this.state;
+    const emailRegEx = /^[\w,\d]+[\d,A-Z,a-z,_,.,-]*@[A-Z,a-z]*\.[A-Z,a-z]*$/;
+    const passwordMatch = password === passwordCopy;
+    const properPassword = /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
+    const properEmail = email.match(emailRegEx) ? true : false;
+
+    this.setState({
+      isPasswordsSame: passwordMatch,
+      isPasswordProper: properPassword,
+      isEmailProper: properEmail,
+    });
+
+    if (!(properEmail && properPassword && passwordMatch)) {
+      return;
+    }
     try {
       // create an object to store the inputs from the form
       const registerInfo = {
@@ -78,12 +83,20 @@ class Register extends Component {
     } catch (error) {
       alert(`There has been an error! Error: ${error}  Please try again later!`);
     }
-
   }
+
   render() {
-    const { registeredCorrectly, firstName, lastName, preferredName, email, password } = this.state;
-    // TODO: add more flags for already used email etc
-    // if flag triggers the user will be sent to the dashboard
+    const { registeredCorrectly,
+            firstName,
+            lastName,
+            preferredName,
+            email,
+            password,
+            passwordCopy,
+            isPasswordsSame,
+            isPasswordProper,
+            isEmailProper } = this.state;
+            console.log(isPasswordsSame);
     if (registeredCorrectly) {
       return <Redirect to='/' />;
     }
@@ -92,35 +105,83 @@ class Register extends Component {
       // TODO: make a register form?
       // form that will take in the user name, email, and password
       <div className="formContainer">
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group autoFocus controlId="firstName">
-            <Form.Label> First Name </Form.Label>
-            <Form.Control placeholder="Enter First Name" value={firstName} onChange={this.handleChange} />
-          </Form.Group>
+        <form onSubmit={this.handleSubmit}>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="stretch"
+          >
 
-          <Form.Group controlId="lastName">
-            <Form.Label> Last Name </Form.Label>
-            <Form.Control placeholder="Enter Last Name" value={lastName} onChange={this.handleChange} />
-          </Form.Group>
+          <Grid
+            container
+            item
+            direction="row"
+            justify="flex-start"
+            alignItems="stretch"
+            >
+              <TextField
+                id="firstName"
+                label="First Name"
+                value={firstName}
+                style={{marginLeft:"2%"}}
+                onChange={this.handleChange}
+                variant="outlined"
+                required
+              />
 
-          <Form.Group controlId="preferredName">
-            <Form.Label> Preferred Name </Form.Label>
-            <Form.Control placeholder="Enter Preferred Name" value={preferredName} onChange={this.handleChange} />
-          </Form.Group>
+              <TextField
+                id="lastName"
+                label="Last Name"
+                value={lastName}
+                onChange={this.handleChange}
+                variant="outlined"
+                required
+              />
 
-          <Form.Group controlId="email">
-            <Form.Label> Email Address </Form.Label>
-            <Form.Control type="email" placeholder="Enter Email" value={email} onChange={this.handleChange} />
-          </Form.Group>
+            </Grid>
+            <TextField
+              id="preferredName"
+              label="Preferred Name"
+              value={preferredName}
+              onChange={this.handleChange}
+              variant="outlined"
+              required
+            />
+            <WarningText issue={!isEmailProper} rules="Emails must alpha-numeric and end with a propper address"/>
+            <TextField
+              id="email"
+              label="Email"
+              variant="outlined"
+              value={email}
+              onChange={this.handleChange}
+              required
+            />
+            <WarningText issue={!isPasswordProper} rules="The password must contain at least 1 capital, 1 lowercase, and one number"/>
+            <TextField
+              id="password"
+              label="Password"
+              variant="outlined"
+              value={password}
+              type = "password"
+              onChange={this.handleChange}
+              required
+            />
+            <WarningText issue={!isPasswordsSame} rules="The passwords must be the same"/>
+            <TextField
+              id="passwordCopy"
+              label="Confirm Password"
+              variant="outlined"
+              value={passwordCopy}
+              type="password"
+              onChange={this.handleChange}
+              required
+            />
 
-          <Form.Group controlId="password">
-            <Form.Label> Password </Form.Label>
-            <Form.Control type="password" placeholder="Enter Password" value={password} onChange={this.handleChange} />
-          </Form.Group>
-
-          <Button block disabled={!this.validateForm()} variant="primary" type="submit">Sign Up
-          </Button>
-        </Form>
+            <Button block variant="contained" type="submit">Sign Up
+            </Button>
+          </Grid>
+        </form>
       </div>
     );
   }

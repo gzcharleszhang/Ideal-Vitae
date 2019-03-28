@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import './form.css';
-import Button from 'react-bootstrap/Button';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import {
   Redirect
 } from "react-router-dom";
+import './form.css';
 
 class Login extends Component {
   constructor(props) {
@@ -75,18 +76,27 @@ class Login extends Component {
       // will get the email and password
       <div className="formContainer">
         <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="email">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control autoFocus type="email" placeholder="Enter email" value={email} onChange={this.handleChange} />
-            <Form.Text className="text-muted">
-              Use the email you signed up with!
-            </Form.Text>
-          </Form.Group>
+            <TextField
+              id="email"
+              label="Email"
+              defaultValue="Use the email you signed up with!"
+              variant="outlined"
+              margin="normal"
+              value={email}
+              // TODO: Add restrictions to password
+              onChange={this.handleChange}
+            />
 
-          <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" value={password} onChange={this.handleChange} />
-          </Form.Group>
+            <TextField
+              id="password"
+              label="Password"
+              variant="outlined"
+              margin="normal"
+              value={password}
+              type="password"
+              // TODO: Add restrictions to password
+              onChange={this.handleChange}
+            />
           // Add an option to reset password/register
           <Button block disabled={!this.validateForm()} variant="primary" type="submit">Submit
           </Button>

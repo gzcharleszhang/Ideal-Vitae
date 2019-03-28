@@ -1,0 +1,9 @@
+.issue {
+    color: red;
+}
+
+.notice {
+  color: inherit;
+  font-size: 75%;
+  font-family: 'Titillium Web', sans-serif
+}
