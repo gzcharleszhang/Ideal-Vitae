@@ -8,7 +8,7 @@ class WarningText extends Component {
     };
 
     render() {
-      const chosenClass = this.props.issue ? "notice issue" : "notice";
+      const chosenClass = this.props.issue ? "issue notice" : "notice";
         return (
             <div>
                 <h1 className={chosenClass}> *** Please fill this correctly. {this.props.rules}! ***</h1>

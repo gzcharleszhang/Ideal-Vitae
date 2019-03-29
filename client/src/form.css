@@ -5,10 +5,10 @@
   padding: 1.5%;
   border-radius: 25px;
   background-color: white;
-  font-family: 'Titillium Web', sans-serif
+  font-family: inherit;
 }
 
 .cleanButton {
   border-radius: 25px;
-  font-family: 'Titillium Web', sans-serif
+  font-family: inherit;
 }
