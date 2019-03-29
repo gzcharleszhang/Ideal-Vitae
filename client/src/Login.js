@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import {
   Redirect
 } from "react-router-dom";
@@ -68,7 +69,7 @@ class Login extends Component {
     const { verified, email, password } = this.state;
     // if flag triggers the user will be directed to the dashboard
     if (verified) {
-      return <Redirect to='/' />;
+      return <Redirect to='/dashboard' />;
     }
 
     return (
@@ -76,6 +77,12 @@ class Login extends Component {
       // will get the email and password
       <div className="formContainer">
         <Form onSubmit={this.handleSubmit}>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="stretch"
+            >
             <TextField
               id="email"
               label="Email"
@@ -83,7 +90,7 @@ class Login extends Component {
               variant="outlined"
               margin="normal"
               value={email}
-              // TODO: Add restrictions to password
+              required
               onChange={this.handleChange}
             />
 
@@ -94,12 +101,12 @@ class Login extends Component {
               margin="normal"
               value={password}
               type="password"
-              // TODO: Add restrictions to password
+              required
               onChange={this.handleChange}
             />
-          // Add an option to reset password/register
-          <Button block disabled={!this.validateForm()} variant="primary" type="submit">Submit
-          </Button>
+          // TODO Add an option to reset password/register
+            <Button block variant="contained" type="submit">Submit</Button>
+          </Grid>
         </Form>
       </div>
     );

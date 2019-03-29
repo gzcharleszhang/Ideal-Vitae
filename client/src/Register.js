@@ -98,7 +98,7 @@ class Register extends Component {
             isEmailProper } = this.state;
             console.log(isPasswordsSame);
     if (registeredCorrectly) {
-      return <Redirect to='/' />;
+      return <Redirect to='/dashboard' />;
     }
 
     return (
