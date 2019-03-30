@@ -4,10 +4,30 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import {
   Redirect
 } from "react-router-dom";
 import './form.css';
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  root: {
+    flexGrow: 1,
+  }
+});
+
 
 class Login extends Component {
   constructor(props) {
@@ -65,7 +85,7 @@ class Login extends Component {
   }
 
   render() {
-
+    const { classes } = this.props;
     const { verified, email, password } = this.state;
     // if flag triggers the user will be directed to the dashboard
     if (verified) {
@@ -76,18 +96,20 @@ class Login extends Component {
       // TODO: make a login form
       // will get the email and password
       <div className="formContainer">
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} className={classes.container}>
           <Grid
             container
             direction="column"
             justify="center"
             alignItems="stretch"
+            className={classes.root}
             >
             <TextField
               id="email"
               label="Email"
               defaultValue="Use the email you signed up with!"
               variant="outlined"
+              className={classes.textField}
               margin="normal"
               value={email}
               required
@@ -98,14 +120,15 @@ class Login extends Component {
               id="password"
               label="Password"
               variant="outlined"
-              margin="normal"
               value={password}
               type="password"
+              className={classes.textField}
+              margin="normal"
               required
               onChange={this.handleChange}
             />
           // TODO Add an option to reset password/register
-            <Button block variant="contained" type="submit">Submit</Button>
+            <Button block variant="contained" type="submit"  className={classes.button}>Submit</Button>
           </Grid>
         </Form>
       </div>
@@ -114,4 +137,8 @@ class Login extends Component {
 
 };
 
-export default Login;
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Login);

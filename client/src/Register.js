@@ -2,12 +2,31 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import WarningText from './WarningText';
 import {
   Redirect
 } from "react-router-dom";
 import axios from 'axios';
 import './form.css'
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  root: {
+    flexGrow: 1,
+  }
+});
 
 class Register extends Component {
   constructor(props) {
@@ -86,6 +105,7 @@ class Register extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { registeredCorrectly,
             firstName,
             lastName,
@@ -96,7 +116,7 @@ class Register extends Component {
             isPasswordsSame,
             isPasswordProper,
             isEmailProper } = this.state;
-            console.log(isPasswordsSame);
+
     if (registeredCorrectly) {
       return <Redirect to='/dashboard' />;
     }
@@ -105,12 +125,13 @@ class Register extends Component {
       // TODO: make a register form?
       // form that will take in the user name, email, and password
       <div className="formContainer">
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} className={classes.container}>
         <Grid
           container
           direction="column"
           justify="center"
           alignItems="stretch"
+          className={classes.root}
           >
 
           <Grid
@@ -124,7 +145,8 @@ class Register extends Component {
                 id="firstName"
                 label="First Name"
                 value={firstName}
-                style={{marginLeft:"2%"}}
+                className={classes.textField}
+                margin="normal"
                 onChange={this.handleChange}
                 variant="outlined"
                 required
@@ -135,6 +157,8 @@ class Register extends Component {
                 label="Last Name"
                 value={lastName}
                 onChange={this.handleChange}
+                className={classes.textField}
+                margin="normal"
                 variant="outlined"
                 required
               />
@@ -145,6 +169,8 @@ class Register extends Component {
               label="Preferred Name"
               value={preferredName}
               onChange={this.handleChange}
+              className={classes.textField}
+              margin="normal"
               variant="outlined"
               required
             />
@@ -154,6 +180,8 @@ class Register extends Component {
               label="Email"
               variant="outlined"
               value={email}
+              className={classes.textField}
+              margin="normal"
               onChange={this.handleChange}
               required
             />
@@ -163,6 +191,8 @@ class Register extends Component {
               label="Password"
               variant="outlined"
               value={password}
+              className={classes.textField}
+              margin="normal"
               type = "password"
               onChange={this.handleChange}
               required
@@ -172,13 +202,15 @@ class Register extends Component {
               id="passwordCopy"
               label="Confirm Password"
               variant="outlined"
+              className={classes.textField}
+              margin="normal"
               value={passwordCopy}
               type="password"
               onChange={this.handleChange}
               required
             />
 
-            <Button block variant="contained" type="submit">Sign Up
+            <Button block variant="contained" type="submit" className={classes.button}>Sign Up
             </Button>
           </Grid>
         </form>
@@ -187,4 +219,8 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Register);
