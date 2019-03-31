@@ -9,9 +9,10 @@ import {
   HashRouter,
   Route
 } from 'react-router-dom';
-import Login from './Login';
-import Register from './Register';
-import Dashboard from './Dashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import AddEntry from './pages/AddEntry';
 import './App.css';
 
 
@@ -37,6 +38,7 @@ class App extends Component {
           <div>
             <Route path = "/login" component = {Login}/>
             <Route path = "/register" component = {Register}/>
+            <Route path = "/addEntry" component = {AddEntry}/>
             <Route path = "/dashboard" component = {Dashboard}/>
           </div>
         </HashRouter>

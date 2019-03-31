@@ -32,7 +32,6 @@ class Register extends Component {
   constructor(props) {
     super(props);
 
-    // all fields of the form and flag to check for proper registration
     this.state = {
       firstName: "",
       lastName: "",
@@ -48,7 +47,6 @@ class Register extends Component {
   }
 
   handleChange = event => {
-    // when change occurs update the states
     this.setState({
       [event.target.id]: event.target.value
     });
@@ -59,6 +57,7 @@ class Register extends Component {
     const { email,
             password,
             passwordCopy } = this.state;
+    // regex to verify if email follows standard email format + password to have at least one capital, lowercase, and number
     const emailRegEx = /^[\w,\d]+[\d,A-Z,a-z,_,.,-]*@[A-Z,a-z]*\.[A-Z,a-z]*$/;
     const passwordMatch = password === passwordCopy;
     const properPassword = /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
@@ -122,8 +121,6 @@ class Register extends Component {
     }
 
     return (
-      // TODO: make a register form?
-      // form that will take in the user name, email, and password
       <div className="formContainer">
         <form onSubmit={this.handleSubmit} className={classes.container}>
         <Grid
@@ -133,7 +130,7 @@ class Register extends Component {
           alignItems="stretch"
           className={classes.root}
           >
-
+          // align the first and last name
           <Grid
             container
             item
@@ -209,9 +206,12 @@ class Register extends Component {
               onChange={this.handleChange}
               required
             />
-
-            <Button block variant="contained" type="submit" className={classes.button}>Sign Up
-            </Button>
+            <Button
+              block
+              variant="contained"
+              type="submit"
+              className={classes.button}>Sign Up</Button>
+              
           </Grid>
         </form>
       </div>
