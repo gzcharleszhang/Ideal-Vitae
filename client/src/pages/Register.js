@@ -86,8 +86,7 @@ class Register extends Component {
         method: 'post',
         url: 'http://127.0.0.1:2002/register',
         data: registerInfo,
-        withCredentials: false
-      });
+      }, {withCredentials: true});
       console.log(response);
       // verifies if the registration was successful
       if (response.data.isRegistered) {
@@ -211,7 +210,7 @@ class Register extends Component {
               variant="contained"
               type="submit"
               className={classes.button}>Sign Up</Button>
-              
+
           </Grid>
         </form>
       </div>

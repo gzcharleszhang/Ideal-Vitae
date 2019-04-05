@@ -66,8 +66,7 @@ class Login extends Component {
         method: 'post',
         url: 'http://127.0.0.1:2002/login',
         data: loginInfo,
-        withCredentials: false
-      });
+      }, {withCredentials: true});
 
       console.log(response);
       console.log(this.state.verified);

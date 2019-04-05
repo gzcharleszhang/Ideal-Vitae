@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 import './form.css'
 
 const styles = theme => ({
@@ -53,6 +54,35 @@ class AddEntry extends Component {
       }));
   }
 
+  handleSubmit = async event => {
+    event.preventDefault();
+    try {
+      const addNewEntry = {
+        sectionSummary : this.state.sectionSummary,
+        topicOfSection: this.state.topicOfSection,
+        titleAndPosition: this.state.titleAndPosition,
+        location: this.state.location,
+        subtopicOfSection: this.state.subtopicOfSection,
+        pointForm: this.state.pointForm,
+      }
+
+      const response = await axios({
+        method: 'post',
+        url: 'http://127.0.0.1:2002/additionalEntry',
+        data: addNewEntry,
+      }, {withCredentials: true});
+      console.log("We got the the entry");
+      if (response.isSuccessful) {
+
+      } else {
+
+      }
+    } catch(error) {
+
+    }
+
+  }
+
   render() {
     const { classes } = this.props;
     const { sectionSummary,
@@ -61,7 +91,7 @@ class AddEntry extends Component {
             location,
             subtopicOfSection } = this.state;
     return (
-      <div className="formContainer">
+      <div className="formContainer" >
         <form onSubmit={this.handleSubmit} className={classes.container}>
           <Grid
             container
@@ -106,6 +136,10 @@ class AddEntry extends Component {
               onChange={this.handleChange}
               required
             />
+            <Button
+              variant="contained"
+              onClick={this.addExp}
+              className={classes.button}> Add More Points</Button>
             {
               sectionSummary.map((val, idx) => {
                 return (
@@ -124,7 +158,7 @@ class AddEntry extends Component {
             }
             <Button
               variant="contained"
-              onClick={this.addExp}
+              type="submit"
               className={classes.button}> Add Experience</Button>
           </Grid>
         </form>
