@@ -5,6 +5,7 @@ import passport from 'passport';
 import config from './config/config.js';
 import mongodb from './components/database.js';
 import {authRegister} from './components/authentication.js';
+import {addEntry} from './components/modifyEntries.js';
 import bcrypt from 'bcrypt';
 const localStrategy = require('passport-local').Strategy;
 import cors from 'cors';
@@ -36,13 +37,17 @@ passport.use(new localStrategy(
 
 // passport will store the serialized info in the cookies
 passport.serializeUser((user, done) => {
+  console.log(user);
   let userObj = {
-    username: user.username
+    username: user.email
   };
+  console.log(userObj);
   done(null, userObj);
 });
 
 passport.deserializeUser((info, done) => {
+  console.log(`info is `);
+  console.log(info);
     done(null, info);
     return;
 });
@@ -68,9 +73,19 @@ app.use(session(config.session));
 app.use(passport.initialize());
 
 app.use(passport.session());
-
-app.use(cors());
-
+//app.use(cors());
+app.use(function(req, res, next) {
+  var allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://localhost:3000/#/addEntry'];
+  var origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  return next();
+});
 
 // routes
 app.get('/', (req, res) => {
@@ -132,8 +147,33 @@ app.post('/register', async (req, res, next) => {
   }
 });
 
-app.post('/additionalEntry', (req, res) => {
+app.post('/additionalEntry', async (req, res, next) => {
   // to add additional info to the database for the resume
+  try {
+    console.log(req.username);
+    console.log(req.user);
+    const newEntry = {
+      user : req.user,
+      sectionOfResume : {
+        topicOfSection: req.body.topicOfSection,
+        titleAndPosition: req.body.titleAndPosition,
+        sectionSummary: req.body.sectionSummary,
+        location: req.body.location,
+        subtopicOfSection: req.body.subtopicOfSection,
+        pointForm: req.body.pointForm,
+        keyWords: req.body.keyWords,
+      },
+    }
+    const result = addEntry(mongodb, newEntry);
+    console.log("ADded?");
+    if (result.error) {
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.post('/editEntry', (req, res) => {
