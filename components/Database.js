@@ -9,8 +9,7 @@ class Database {
 
   async _connect() {
     try {
-      await mongoose.connect(config.database.connection,
-                             config.database.requirements);
+      await mongoose.connect(config.database.connection, config.database.requirements);
       const db = mongoose.connection;
   		db.on('error', console.error.bind(console, 'connection error:'));
       db.once('open', console.log.bind(console, 'connection successful'));

@@ -27,17 +27,31 @@ class Dashboard extends Component {
           direction="row"
           justify="center"
           alignItems="stretch"
+        >
+          <Button
+            variant="outlined"
+            size="large"
+            color="primary"
+            className={classes.margin}
           >
-          <Button variant="outlined" size="large" color="primary" className={classes.margin}>
             New Entries
           </Button>
-          <Button variant="outlined" size="large" color="primary" className={classes.margin}>
+          <Button
+            variant="outlined"
+            size="large"
+            color="primary"
+            className={classes.margin}
+          >
             Edit Information
           </Button>
-          <Button variant="outlined" size="large" color="primary" className={classes.margin}>
+          <Button
+            variant="outlined"
+            size="large"
+            color="primary"
+            className={classes.margin}
+          >
             Generate Resume
           </Button>
-
         </Grid>
       </div>
     )

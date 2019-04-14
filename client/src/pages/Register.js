@@ -86,7 +86,8 @@ class Register extends Component {
         method: 'post',
         url: 'http://127.0.0.1:2002/register',
         data: registerInfo,
-      }, {withCredentials: true});
+        withCredentials: true,
+      });
       console.log(response);
       // verifies if the registration was successful
       if (response.data.isRegistered) {

@@ -70,7 +70,8 @@ class AddEntry extends Component {
         method: 'post',
         url: 'http://127.0.0.1:2002/additionalEntry',
         data: addNewEntry,
-      }, {withCredentials: true});
+        withCredentials: true,
+      });
       console.log("We got the the entry");
       if (response.isSuccessful) {
 
@@ -91,15 +92,20 @@ class AddEntry extends Component {
             location,
             subtopicOfSection } = this.state;
     return (
-      <div className="formContainer" >
-        <form onSubmit={this.handleSubmit} className={classes.container}>
+      <div
+        className="formContainer"
+      >
+        <form
+          onSubmit={this.handleSubmit}
+          className={classes.container}
+        >
           <Grid
             container
             direction="column"
             justify="center"
             alignItems="stretch"
             className={classes.root}
-            >
+          >
             <TextField
               id="topicOfSection"
               label="Topic of Section"
@@ -140,8 +146,7 @@ class AddEntry extends Component {
               variant="contained"
               onClick={this.addExp}
               className={classes.button}> Add More Points</Button>
-            {
-              sectionSummary.map((val, idx) => {
+            {sectionSummary.map((val, idx) => {
                 return (
                     <TextField
                       label="Experience"
@@ -154,12 +159,14 @@ class AddEntry extends Component {
                       onChange={this.handleChange}
                     />
                 );
-              })
-            }
+            })}
             <Button
               variant="contained"
               type="submit"
-              className={classes.button}> Add Experience</Button>
+              className={classes.button}
+            >
+              Add Experience
+            </Button>
           </Grid>
         </form>
       </div>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   Redirect
 } from "react-router-dom";
+import axios from 'axios';
 import './form.css';
 
 const styles = theme => ({
@@ -28,7 +28,6 @@ const styles = theme => ({
   }
 });
 
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +39,6 @@ class Login extends Component {
     };
 
   }
-
   // checking that users have input information
   validateForm = () => {
     return this.state.email.length > 0 && this.state.password.length > 0;
@@ -57,16 +55,21 @@ class Login extends Component {
     event.preventDefault();
     try {
       // prepares log in credentials from input
+      const {
+        email,
+        password,
+      } = this.state;
       const loginInfo = {
-        email: this.state.email,
-        password: this.state.password
+        email,
+        password,
       };
       // post request to verify user
       const response = await axios({
         method: 'post',
         url: 'http://127.0.0.1:2002/login',
         data: loginInfo,
-      }, {withCredentials: true});
+        withCredentials: true,
+      });
 
       console.log(response);
       console.log(this.state.verified);
@@ -84,13 +87,18 @@ class Login extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { verified, email, password } = this.state;
+    const {
+      classes,
+    } = this.props;
+    const {
+      verified,
+      email,
+      password,
+    } = this.state;
     // if flag triggers the user will be directed to the dashboard
     if (verified) {
       return <Redirect to='/dashboard' />;
     }
-
     return (
       // TODO: make a login form
       // will get the email and password
@@ -102,7 +110,7 @@ class Login extends Component {
             justify="center"
             alignItems="stretch"
             className={classes.root}
-            >
+          >
             <TextField
               id="email"
               label="Email"
@@ -127,13 +135,19 @@ class Login extends Component {
               onChange={this.handleChange}
             />
           // TODO Add an option to reset password/register
-            <Button block variant="contained" type="submit"  className={classes.button}>Submit</Button>
+            <Button
+              block
+              variant="contained"
+              type="submit"
+              className={classes.button}
+            >
+              Submit
+            </Button>
           </Grid>
         </Form>
       </div>
     );
   }
-
 };
 
 Login.propTypes = {
