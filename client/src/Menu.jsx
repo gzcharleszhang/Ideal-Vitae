@@ -9,7 +9,7 @@ import {
 import AddEntry from './pages/AddEntry';
 import Dashboard from './pages/Dashboard';
 import './menu.css'
-};
+
 
 export default class AppMenu extends Component {
   constructor(props) {
@@ -38,10 +38,10 @@ export default class AppMenu extends Component {
           onClick={this.handleClick}
         >
           <MenuIcon />
+        </IconButton>
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
-          </IconButton>
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
@@ -61,3 +61,4 @@ export default class AppMenu extends Component {
       </div>
     )
   }
+};

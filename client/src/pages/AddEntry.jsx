@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import EntryForm from './components/EntryForm'
+import PropTypes from 'prop-types';
 import './form.css'
 
 const styles = theme => ({
@@ -28,21 +26,26 @@ class AddEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sectionSummary : [{ experience : "" }],
+      sectionSummary : [{ experience : "", pointIntro : "" }],
       topicOfSection: "",
       titleAndPosition: "",
       location: "",
       subtopicOfSection: "",
-      pointForm: true,
+      pointType: "paragraph",
     }
   };
 
+  handleSelectChange = event => {
+      this.setState({ pointType : event.target.value });
+  }
+
   handleChange = event => {
-      if ("experience" === event.target.name) {
+      if ("experience" === event.target.name || "pointIntro" === event.target.name ) {
         let sectionSummary = [...this.state.sectionSummary]
         sectionSummary[event.target.id][event.target.name] = event.target.value;
         this.setState({ sectionSummary });
       } else {
+        console.log(event.target.value);
         this.setState({ [event.target.id]: event.target.value })
       }
     }
@@ -50,7 +53,7 @@ class AddEntry extends Component {
   // will add a new entry and result in a new textfield
   addExp = (e) => {
       this.setState((prevState) => ({
-        sectionSummary: [...prevState.sectionSummary, { experience : "" }],
+        sectionSummary: [...prevState.sectionSummary, { experience : "", pointIntro : ""  }],
       }));
   }
 
@@ -63,7 +66,7 @@ class AddEntry extends Component {
         titleAndPosition: this.state.titleAndPosition,
         location: this.state.location,
         subtopicOfSection: this.state.subtopicOfSection,
-        pointForm: this.state.pointForm,
+        pointType: this.state.pointType,
       }
 
       const response = await axios({
@@ -90,85 +93,30 @@ class AddEntry extends Component {
             topicOfSection,
             titleAndPosition,
             location,
-            subtopicOfSection } = this.state;
+            subtopicOfSection,
+            pointType,
+           } = this.state;
     return (
       <div
         className="formContainer"
       >
-        <form
-          onSubmit={this.handleSubmit}
-          className={classes.container}
-        >
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="stretch"
-            className={classes.root}
-          >
-            <TextField
-              id="topicOfSection"
-              label="Topic of Section"
-              value={topicOfSection}
-              className={classes.textField}
-              margin="normal"
-              onChange={this.handleChange}
-              required
-            />
-            <TextField
-              id="subtopicOfSection"
-              label="Subtopic of Section"
-              value={subtopicOfSection}
-              className={classes.textField}
-              margin="normal"
-              onChange={this.handleChange}
-              required
-            />
-            <TextField
-              id="titleAndPosition"
-              label="Title and/or Position"
-              value={titleAndPosition}
-              className={classes.textField}
-              margin="normal"
-              onChange={this.handleChange}
-              required
-            />
-            <TextField
-              id="location"
-              label="Location"
-              value={location}
-              className={classes.textField}
-              margin="normal"
-              onChange={this.handleChange}
-              required
-            />
-            <Button
-              variant="contained"
-              onClick={this.addExp}
-              className={classes.button}> Add More Points</Button>
-            {sectionSummary.map((val, idx) => {
-                return (
-                    <TextField
-                      label="Experience"
-                      name="experience"
-                      id={idx.toString()}
-                      key={idx}
-                      value={sectionSummary[idx].experience}
-                      className={classes.textField}
-                      margin="normal"
-                      onChange={this.handleChange}
-                    />
-                );
-            })}
-            <Button
-              variant="contained"
-              type="submit"
-              className={classes.button}
-            >
-              Add Experience
-            </Button>
-          </Grid>
-        </form>
+        <select onChange={this.handleSelectChange} >
+          <option value="paragraph">Paragraph</option>
+          <option value="point">Bulleted List</option>
+          <option value="nopoint">Simple List</option>
+          <option value="intropoint">Label and Point</option>
+        </select>
+        <EntryForm
+          location={location}
+          pointType={pointType}
+          sectionSummary={sectionSummary}
+          topicOfSection={topicOfSection}
+          titleAndPosition={titleAndPosition}
+          subtopicOfSection={subtopicOfSection}
+          addExp={this.addExp.bind(this)}
+          handleChange={this.handleChange.bind(this)}
+          handleSubmit={this.handleSubmit.bind(this)}
+        />
       </div>
     )
   };

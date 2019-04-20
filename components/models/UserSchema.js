@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema({
       type: String
     },
     sectionSummary: [{
+      pointIntro: {
+        type: String
+      },
       experience: {
         type: String
       },
@@ -57,15 +60,12 @@ const userSchema = new mongoose.Schema({
     subtopicOfSection: {
       type: String
     },
-    pointForm: {
-      type: Boolean,
-      required: true
-    },
-    keyWords: {
+    pointType: {
       type: String,
       required: true
-    }
-  }]
+    },
+  },
+  ]
 });
 
 module.exports = mongoose.model('Users', userSchema);
