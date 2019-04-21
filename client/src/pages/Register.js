@@ -48,15 +48,17 @@ class Register extends Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
   }
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { email,
-            password,
-            passwordCopy } = this.state;
+    const {
+      email,
+      password,
+      passwordCopy,
+    } = this.state;
     // regex to verify if email follows standard email format + password to have at least one capital, lowercase, and number
     const emailRegEx = /^[\w,\d]+[\d,A-Z,a-z,_,.,-]*@[A-Z,a-z]*\.[A-Z,a-z]*$/;
     const isPasswordsSame = password === passwordCopy;
