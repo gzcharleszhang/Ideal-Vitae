@@ -7,9 +7,8 @@
   background-color: white;
 }
 
-.cleanButton {
-  background-color: white;
-  border-radius: 25px;
-  color: black;
-  border-color: black;
+.contain {
+  display: block;
+  overflow: auto;
+  resize: both;
 }

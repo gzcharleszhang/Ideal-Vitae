@@ -1,0 +1,7 @@
+.menuOption {
+  background-color: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 20px;
+  display: inline-block;
+}

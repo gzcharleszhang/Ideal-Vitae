@@ -1,32 +1,32 @@
+import bcrypt from 'bcrypt';
+import bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
-import bodyParser from 'body-parser';
 import passport from 'passport';
+import mongodb from './components/Database.js';
+import userSchema from './components/models/UserSchema.js';
 import config from './config/config.js';
-import mongodb from './components/database.js';
-import {authRegister} from './components/authentication.js';
-import bcrypt from 'bcrypt';
+import {
+  authRegister,
+  addEntry,
+} from './components/DbModifier.js';
 const localStrategy = require('passport-local').Strategy;
-import cors from 'cors';
-import userSchema from './components/models/userSchema.js';
 
 // config the local strategy for passport
-passport.use(new localStrategy(
-  {usernameField: "email"},
+passport.use(new localStrategy({ usernameField: "email" },
   async (username, password, done) => {
     try {
-      const response = await userSchema.find({email: username});
+      const response = await userSchema.find({ email: username });
       if (!(response && response[0])) {
-        return done(null, false, {message: 'Invalid credentials.\n'});
+        return done(null, false, { message: 'Invalid credentials.\n' });
       }
       // since username is unique it should be the first one
       const user = response[0];
       // will compare the encrypted passwords
       const userInfo = await bcrypt.compare(password, user.password);
       if (!userInfo) {
-        return done(null, false, {message: 'Invalid credentials.\n'});
+        return done(null, false, { message: 'Invalid credentials.\n' });
       }
-      console.log('Success');
       return done(null, user);
     } catch (error) {
       return done(error);
@@ -36,8 +36,11 @@ passport.use(new localStrategy(
 
 // passport will store the serialized info in the cookies
 passport.serializeUser((user, done) => {
-  let userObj = {
-    username: user.username
+  const {
+    id,
+  } = user;
+  const userObj = {
+    id,
   };
   done(null, userObj);
 });
@@ -69,16 +72,20 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-app.use(cors());
-
-
-// routes
-app.get('/', (req, res) => {
-  res.send(``);
+app.use(function(req, res, next) {
+  const allowedOrigins = [...config.origins];
+  const origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  return next();
 });
 
-/* Will add pools after everything is working so will pretend it is implemented */
-
+// routes
 app.post('/login', (req, res, next) => {
   // TODO checked if already logged in?
   // standard passportjs custom callback login
@@ -92,7 +99,7 @@ app.post('/login', (req, res, next) => {
         if (error) {
           return next(error);
         }
-        res.status(200).send({isAuthenticated: true});
+        res.status(200).send({ isAuthenticated: true });
       });
     } catch (error) {
       return next(error);
@@ -102,25 +109,32 @@ app.post('/login', (req, res, next) => {
 
 app.get('/authrequired', async (req, res, next) => {
   if (req.user) {
-    res.status(200).send({isAuthenticated: true});
+    res.status(200).send({ isAuthenticated: true });
     return;
   }
-  res.status(400).send({isAuthenticated: false});
+  res.status(400).send({ isAuthenticated: false });
 });
 
 app.post('/register', async (req, res, next) => {
   try {
     // initialize the user object to contain required credentials
-    const user = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      preferredName: req.body.preferredName,
-      email: req.body.email,
-      password: req.body.password,
-      verified: false
+    const {
+      email,
+      lastName,
+      password,
+      firstName,
+      preferredName,
+    } = req.body;
+    const userDetails = {
+      email,
+      lastName,
+      password,
+      firstName,
+      preferredName,
+      verified: false,
     };
     // add the information to the database
-    const result = await authRegister(mongodb, user);
+    const result = await authRegister(mongodb, userDetails);
     // check to see if the user has been registered
     if (result.error) {
       res.status(400).send(result);
@@ -132,8 +146,42 @@ app.post('/register', async (req, res, next) => {
   }
 });
 
-app.post('/additionalEntry', (req, res) => {
+app.post('/additionalEntry', async (req, res, next) => {
   // to add additional info to the database for the resume
+  try {
+    const {
+      id,
+    } = req.user;
+    const {
+      keyWords,
+      location,
+      pointForm,
+      sectionSummary,
+      topicOfSection,
+      titleAndPosition,
+      subtopicOfSection,
+    } = req.body;
+    const newEntry = {
+      id,
+      sectionOfResume : {
+        keyWords,
+        location,
+        pointForm,
+        sectionSummary,
+        topicOfSection,
+        titleAndPosition,
+        subtopicOfSection,
+      },
+    };
+    const result = await addEntry(mongodb, newEntry);
+    if (result.error) {
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.post('/editEntry', (req, res) => {

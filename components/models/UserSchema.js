@@ -36,24 +36,33 @@ const userSchema = new mongoose.Schema({
     }
   }],
   sectionOfResume: [{
-    topic: {
+    topicOfSection: {
       type: String,
       required: true
     },
-    title: {
+    date: {
+      type: String,
+    },
+    titleAndPosition: {
       type: String
     },
-    data: {
-      type: String
-    },
+    sectionSummary: [{
+      experience: {
+        type: String
+      },
+    }],
     location: {
       type: String
     },
-    subtopic: {
+    subtopicOfSection: {
       type: String
     },
     pointForm: {
       type: Boolean,
+      required: true
+    },
+    keyWords: {
+      type: String,
       required: true
     }
   }]
