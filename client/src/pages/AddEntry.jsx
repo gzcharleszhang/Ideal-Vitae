@@ -25,8 +25,12 @@ const styles = theme => ({
 class AddEntry extends Component {
   constructor(props) {
     super(props);
+    const emptyPoint {
+      experience: "",
+      pointIntro: "",
+    };
     this.state = {
-      sectionSummary : [{ experience : "", pointIntro : "" }],
+      sectionSummary : [emptyPoint],
       topicOfSection: "",
       titleAndPosition: "",
       location: "",
@@ -43,30 +47,45 @@ class AddEntry extends Component {
       if ("experience" === event.target.name || "pointIntro" === event.target.name ) {
         let sectionSummary = [...this.state.sectionSummary]
         sectionSummary[event.target.id][event.target.name] = event.target.value;
-        this.setState({ sectionSummary });
+        this.setState({
+          sectionSummary,
+        });
       } else {
-        console.log(event.target.value);
-        this.setState({ [event.target.id]: event.target.value })
+        this.setState({
+          [event.target.id]: event.target.value,
+        });
       }
     }
 
   // will add a new entry and result in a new textfield
-  addExp = (e) => {
-      this.setState((prevState) => ({
-        sectionSummary: [...prevState.sectionSummary, { experience : "", pointIntro : ""  }],
-      }));
+  addExp = event => {
+    const emptyPoint {
+      experience: "",
+      pointIntro: "",
+    };
+    this.setState((prevState) => ({
+      sectionSummary: [...prevState.sectionSummary, emptyEntry],
+    }));
   }
 
   handleSubmit = async event => {
     event.preventDefault();
     try {
+      const {
+        sectionSummary,
+        topicOfSection,
+        titleAndPosition,
+        location,
+        subtopicOfSection,
+        pointForm,
+      } = this.state;
       const addNewEntry = {
-        sectionSummary : this.state.sectionSummary,
-        topicOfSection: this.state.topicOfSection,
-        titleAndPosition: this.state.titleAndPosition,
-        location: this.state.location,
-        subtopicOfSection: this.state.subtopicOfSection,
-        pointType: this.state.pointType,
+        sectionSummary,
+        topicOfSection,
+        titleAndPosition,
+        location,
+        subtopicOfSection,
+        pointType,
       }
 
       const response = await axios({
@@ -75,11 +94,10 @@ class AddEntry extends Component {
         data: addNewEntry,
         withCredentials: true,
       });
-      console.log("We got the the entry");
       if (response.isSuccessful) {
 
       } else {
-
+// work in progress
       }
     } catch(error) {
 
@@ -88,14 +106,17 @@ class AddEntry extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { sectionSummary,
-            topicOfSection,
-            titleAndPosition,
-            location,
-            subtopicOfSection,
-            pointType,
-           } = this.state;
+    const {
+      classes,
+    } = this.props;
+    const {
+      sectionSummary,
+      topicOfSection,
+      titleAndPosition,
+      location,
+      subtopicOfSection,
+      pointType,
+    } = this.state;
     return (
       <div
         className="formContainer"

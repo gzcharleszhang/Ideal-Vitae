@@ -15,20 +15,26 @@ export default class AppMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    anchorEl: null,
+      anchorEl: null,
     };
   }
 
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({
+      anchorEl: event.currentTarget,
+    });
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({
+      anchorEl: null,
+    });
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const {
+      anchorEl,
+    } = this.state;
     return (
       <div>
         <IconButton

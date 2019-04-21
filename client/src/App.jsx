@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import AppMenu from './Menu'
 import {
   HashRouter,
-  Route
+  Route,
 } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';

@@ -1,4 +1,3 @@
-import cors from 'cors';
 import bcrypt from 'bcrypt';
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -28,7 +27,6 @@ passport.use(new localStrategy({ usernameField: "email" },
       if (!userInfo) {
         return done(null, false, { message: 'Invalid credentials.\n' });
       }
-      console.log('Success');
       return done(null, user);
     } catch (error) {
       return done(error);
@@ -38,18 +36,16 @@ passport.use(new localStrategy({ usernameField: "email" },
 
 // passport will store the serialized info in the cookies
 passport.serializeUser((user, done) => {
-  console.log(user);
-  const { id } = user;
+  const {
+    id,
+  } = user;
   const userObj = {
     id,
   };
-  console.log(userObj);
   done(null, userObj);
 });
 
 passport.deserializeUser((info, done) => {
-  console.log(`info is `);
-  console.log(info);
     done(null, info);
     return;
 });
@@ -75,9 +71,9 @@ app.use(session(config.session));
 app.use(passport.initialize());
 
 app.use(passport.session());
-//app.use(cors());
+
 app.use(function(req, res, next) {
-  const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://localhost:3000/#/addEntry'];
+  const allowedOrigins = [...config.origins];
   const origin = req.headers.origin;
   if(allowedOrigins.indexOf(origin) > -1){
        res.setHeader('Access-Control-Allow-Origin', origin);
@@ -90,10 +86,6 @@ app.use(function(req, res, next) {
 });
 
 // routes
-app.get('/', (req, res) => {
-  res.send(``);
-});
-
 app.post('/login', (req, res, next) => {
   // TODO checked if already logged in?
   // standard passportjs custom callback login
@@ -182,7 +174,6 @@ app.post('/additionalEntry', async (req, res, next) => {
       },
     };
     const result = await addEntry(mongodb, newEntry);
-    console.log("ADded?");
     if (result.error) {
       res.status(400).send(result);
     } else {

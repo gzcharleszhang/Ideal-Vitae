@@ -48,25 +48,27 @@ class Register extends Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
   }
 
   handleSubmit = async event => {
     event.preventDefault();
-    const { email,
-            password,
-            passwordCopy } = this.state;
+    const {
+      email,
+      password,
+      passwordCopy,
+    } = this.state;
     // regex to verify if email follows standard email format + password to have at least one capital, lowercase, and number
     const emailRegEx = /^[\w,\d]+[\d,A-Z,a-z,_,.,-]*@[A-Z,a-z]*\.[A-Z,a-z]*$/;
-    const passwordMatch = password === passwordCopy;
-    const properPassword = /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
+    const isPasswordsSame = password === passwordCopy;
+    const isPasswordProper = /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
     const properEmail = email.match(emailRegEx) ? true : false;
 
     this.setState({
-      isPasswordsSame: passwordMatch,
-      isPasswordProper: properPassword,
-      isEmailProper: properEmail,
+      isPasswordsSame,
+      isPasswordProper,
+      properEmail,
     });
 
     if (!(properEmail && properPassword && passwordMatch)) {
@@ -74,12 +76,19 @@ class Register extends Component {
     }
     try {
       // create an object to store the inputs from the form
+      const {
+        email,
+        firstName,
+        lastName,
+        preferredName,
+        password,
+      } = this.state;
       const registerInfo = {
-        email: this.state.email,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        preferredName: this.state.preferredName,
-        password: this.state.password
+        email,
+        firstName,
+        lastName,
+        preferredName,
+        password,
       };
       // post request to add the given info into the database
       const response = await axios({
@@ -104,17 +113,21 @@ class Register extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { registeredCorrectly,
-            firstName,
-            lastName,
-            preferredName,
-            email,
-            password,
-            passwordCopy,
-            isPasswordsSame,
-            isPasswordProper,
-            isEmailProper } = this.state;
+    const {
+      classes,
+    } = this.props;
+    const {
+      registeredCorrectly,
+      firstName,
+      lastName,
+      preferredName,
+      email,
+      password,
+      passwordCopy,
+      isPasswordsSame,
+      isPasswordProper,
+      isEmailProper,
+    } = this.state;
 
     if (registeredCorrectly) {
       return <Redirect to='/dashboard' />;
