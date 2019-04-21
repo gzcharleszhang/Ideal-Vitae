@@ -35,7 +35,7 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      verified: false
+      verified: false,
     };
 
   }
@@ -47,7 +47,7 @@ class Login extends Component {
   handleChange = event => {
     this.setState({
       // updates when change is made
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
   }
 
@@ -70,13 +70,10 @@ class Login extends Component {
         data: loginInfo,
         withCredentials: true,
       });
-
-      console.log(response);
-      console.log(this.state.verified);
       // checks if user is authenticated
       if (response.data.isAuthenticated) {
         this.setState({
-          verified: true
+          verified: true,
         });
       } else {
         alert(`Wrong credentials`);

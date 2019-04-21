@@ -41,29 +41,41 @@ class AddEntry extends Component {
       if ("experience" === event.target.name) {
         let sectionSummary = [...this.state.sectionSummary]
         sectionSummary[event.target.id][event.target.name] = event.target.value;
-        this.setState({ sectionSummary });
+        this.setState({
+          sectionSummary,
+        });
       } else {
-        this.setState({ [event.target.id]: event.target.value })
+        this.setState({
+          [event.target.id]: event.target.value,
+        });
       }
     }
 
   // will add a new entry and result in a new textfield
-  addExp = (e) => {
+  addExp = event => {
       this.setState((prevState) => ({
-        sectionSummary: [...prevState.sectionSummary, { experience : "" }],
+        sectionSummary: [...prevState.sectionSummary, { experience: "" }],
       }));
   }
 
   handleSubmit = async event => {
     event.preventDefault();
     try {
+      const {
+        sectionSummary,
+        topicOfSection,
+        titleAndPosition,
+        location,
+        subtopicOfSection,
+        pointForm,
+      } = this.state;
       const addNewEntry = {
-        sectionSummary : this.state.sectionSummary,
-        topicOfSection: this.state.topicOfSection,
-        titleAndPosition: this.state.titleAndPosition,
-        location: this.state.location,
-        subtopicOfSection: this.state.subtopicOfSection,
-        pointForm: this.state.pointForm,
+        sectionSummary,
+        topicOfSection,
+        titleAndPosition,
+        location,
+        subtopicOfSection,
+        pointForm,
       }
 
       const response = await axios({
@@ -72,11 +84,10 @@ class AddEntry extends Component {
         data: addNewEntry,
         withCredentials: true,
       });
-      console.log("We got the the entry");
       if (response.isSuccessful) {
 
       } else {
-
+// work in progress
       }
     } catch(error) {
 
@@ -85,12 +96,16 @@ class AddEntry extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { sectionSummary,
-            topicOfSection,
-            titleAndPosition,
-            location,
-            subtopicOfSection } = this.state;
+    const {
+      classes,
+    } = this.props;
+    const {
+      sectionSummary,
+      topicOfSection,
+      titleAndPosition,
+      location,
+      subtopicOfSection,
+    } = this.state;
     return (
       <div
         className="formContainer"
