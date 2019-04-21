@@ -28,7 +28,7 @@ class AddEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sectionSummary : [{ experience : "" }],
+      sectionSummary : [{ experience: "" }],
       topicOfSection: "",
       titleAndPosition: "",
       location: "",
