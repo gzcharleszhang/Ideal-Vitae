@@ -25,7 +25,7 @@ const styles = theme => ({
 class AddEntry extends Component {
   constructor(props) {
     super(props);
-    const emptyPoint {
+    const emptyPoint = {
       experience: "",
       pointIntro: "",
     };
@@ -59,12 +59,12 @@ class AddEntry extends Component {
 
   // will add a new entry and result in a new textfield
   addExp = event => {
-    const emptyPoint {
+    const emptyPoint = {
       experience: "",
       pointIntro: "",
     };
     this.setState((prevState) => ({
-      sectionSummary: [...prevState.sectionSummary, emptyEntry],
+      sectionSummary: [...prevState.sectionSummary, emptyPoint],
     }));
   }
 
@@ -77,7 +77,7 @@ class AddEntry extends Component {
         titleAndPosition,
         location,
         subtopicOfSection,
-        pointForm,
+        pointType,
       } = this.state;
       const addNewEntry = {
         sectionSummary,

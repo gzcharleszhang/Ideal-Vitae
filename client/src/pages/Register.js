@@ -71,7 +71,7 @@ class Register extends Component {
       properEmail,
     });
 
-    if (!(properEmail && properPassword && passwordMatch)) {
+    if (!(isPasswordsSame && isPasswordProper && properEmail)) {
       return;
     }
     try {

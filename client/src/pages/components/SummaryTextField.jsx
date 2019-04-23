@@ -36,10 +36,15 @@ class SummaryTextField extends Component {
       sectionSummary,
     } = this.props;
     return (
-      <div>
+      <div
+        className={classes.root}
+      >
         {sectionSummary.map((val, idx) => {
             return (
-              <div>
+              <Grid
+                container
+                className={classes.container}
+              >
                 { pointType === "intropoint" && (
                   <TextField
                     label="Label"
@@ -62,7 +67,7 @@ class SummaryTextField extends Component {
                   margin="normal"
                   onChange={handleChange}
                 />
-              </ div>
+              </Grid>
             );
         })}
       </div>

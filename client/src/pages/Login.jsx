@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Form from 'react-bootstrap/Form';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -99,8 +98,13 @@ class Login extends Component {
     return (
       // TODO: make a login form
       // will get the email and password
-      <div className="formContainer">
-        <Form onSubmit={this.handleSubmit} className={classes.container}>
+      <div
+        className="formContainer"
+      >
+        <form
+          onSubmit={this.handleSubmit}
+          className={classes.container}
+        >
           <Grid
             container
             direction="column"
@@ -141,7 +145,7 @@ class Login extends Component {
               Submit
             </Button>
           </Grid>
-        </Form>
+        </form>
       </div>
     );
   }
