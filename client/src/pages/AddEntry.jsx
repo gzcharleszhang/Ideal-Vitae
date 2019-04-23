@@ -5,42 +5,25 @@ import EntryForm from './components/EntryForm'
 import PropTypes from 'prop-types';
 import './form.css'
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
-  root: {
-    flexGrow: 1,
-  }
-});
-
-class AddEntry extends Component {
+export default class AddEntry extends Component {
   constructor(props) {
     super(props);
-    const emptyPoint = {
-      experience: "",
-      pointIntro: "",
-    };
     this.state = {
-      sectionSummary : [emptyPoint],
+      sectionSummary : [],
       topicOfSection: "",
       titleAndPosition: "",
       location: "",
       subtopicOfSection: "",
       pointType: "paragraph",
+      startPeriod: "",
+      endingPeriod: "",
     }
   };
 
   handleSelectChange = event => {
-      this.setState({ pointType : event.target.value });
+      this.setState({
+        pointType: event.target.value,
+      });
   }
 
   handleChange = event => {
@@ -78,6 +61,8 @@ class AddEntry extends Component {
         location,
         subtopicOfSection,
         pointType,
+        startPeriod,
+        endingPeriod,
       } = this.state;
       const addNewEntry = {
         sectionSummary,
@@ -86,6 +71,8 @@ class AddEntry extends Component {
         location,
         subtopicOfSection,
         pointType,
+        startPeriod,
+        endingPeriod,
       }
 
       const response = await axios({
@@ -107,15 +94,14 @@ class AddEntry extends Component {
 
   render() {
     const {
-      classes,
-    } = this.props;
-    const {
       sectionSummary,
       topicOfSection,
       titleAndPosition,
       location,
       subtopicOfSection,
       pointType,
+      startPeriod,
+      endingPeriod,
     } = this.state;
     return (
       <div
@@ -130,6 +116,8 @@ class AddEntry extends Component {
         <EntryForm
           location={location}
           pointType={pointType}
+          startPeriod={startPeriod}
+          endingPeriod={endingPeriod}
           sectionSummary={sectionSummary}
           topicOfSection={topicOfSection}
           titleAndPosition={titleAndPosition}
@@ -142,9 +130,3 @@ class AddEntry extends Component {
     )
   };
 };
-
-AddEntry.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(AddEntry);
