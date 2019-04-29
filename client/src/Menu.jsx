@@ -9,7 +9,7 @@ import {
 import AddEntry from './pages/AddEntry';
 import Dashboard from './pages/Dashboard';
 import './menu.css'
-};
+
 
 export default class AppMenu extends Component {
   constructor(props) {
@@ -67,3 +67,4 @@ export default class AppMenu extends Component {
       </div>
     )
   }
+};

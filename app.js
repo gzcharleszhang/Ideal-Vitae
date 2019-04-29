@@ -166,7 +166,7 @@ app.post('/additionalEntry', async (req, res, next) => {
       sectionOfResume : {
         keyWords,
         location,
-        pointForm,
+        pointType,
         sectionSummary,
         topicOfSection,
         titleAndPosition,
