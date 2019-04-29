@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import uuid from 'uuid/v4';
 
 const styles = theme => ({
   container: {
@@ -44,13 +45,13 @@ class SummaryTextField extends Component {
               <Grid
                 container
                 className={classes.container}
+                key={uuid()}
               >
                 { pointType === "intropoint" && (
                   <TextField
                     label="Label"
                     name="pointIntro"
                     id={idx.toString()}
-                    key={idx*5-1}
                     value={sectionSummary[idx].pointIntro}
                     className={classes.textField}
                     margin="normal"
@@ -61,7 +62,6 @@ class SummaryTextField extends Component {
                   label="Point"
                   name="experience"
                   id={idx.toString()}
-                  key={idx*5}
                   value={sectionSummary[idx].experience}
                   className={classes.textField}
                   margin="normal"
