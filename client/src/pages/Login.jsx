@@ -32,7 +32,7 @@ class Login extends Component {
     super(props);
     // holding state of input and flag
     this.state = {
-      email: "",
+      username: "",
       password: "",
       verified: false,
     };
@@ -40,7 +40,7 @@ class Login extends Component {
   }
   // checking that users have input information
   validateForm = () => {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -55,11 +55,11 @@ class Login extends Component {
     try {
       // prepares log in credentials from input
       const {
-        email,
+        username,
         password,
       } = this.state;
       const loginInfo = {
-        email,
+        username,
         password,
       };
       // post request to verify user
@@ -88,7 +88,7 @@ class Login extends Component {
     } = this.props;
     const {
       verified,
-      email,
+      username,
       password,
     } = this.state;
     // if flag triggers the user will be directed to the dashboard
@@ -97,7 +97,7 @@ class Login extends Component {
     }
     return (
       // TODO: make a login form
-      // will get the email and password
+      // will get the username and password
       <div
         className="formContainer"
       >
@@ -113,13 +113,12 @@ class Login extends Component {
             className={classes.root}
           >
             <TextField
-              id="email"
-              label="Email"
-              defaultValue="Use the email you signed up with!"
+              id="username"
+              label="Username"
               variant="outlined"
               className={classes.textField}
               margin="normal"
-              value={email}
+              value={username}
               required
               onChange={this.handleChange}
             />
@@ -137,7 +136,6 @@ class Login extends Component {
             />
           // TODO Add an option to reset password/register
             <Button
-              block
               variant="contained"
               type="submit"
               className={classes.button}

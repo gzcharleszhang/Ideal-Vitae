@@ -13,10 +13,10 @@ import {
 const localStrategy = require('passport-local').Strategy;
 
 // config the local strategy for passport
-passport.use(new localStrategy({ usernameField: "email" },
+passport.use(new localStrategy({ usernameField: "username" },
   async (username, password, done) => {
     try {
-      const response = await userSchema.find({ email: username });
+      const response = await userSchema.find({ username });
       if (!(response && response[0])) {
         return done(null, false, { message: 'Invalid credentials.\n' });
       }
@@ -118,19 +118,20 @@ app.get('/authrequired', async (req, res, next) => {
 app.post('/register', async (req, res, next) => {
   try {
     // initialize the user object to contain required credentials
+    console.log("dwdwdwd");
     const {
       email,
       lastName,
       password,
       firstName,
-      preferredName,
+      username,
     } = req.body;
     const userDetails = {
       email,
       lastName,
       password,
       firstName,
-      preferredName,
+      username,
       verified: false,
     };
     // add the information to the database
@@ -149,30 +150,34 @@ app.post('/register', async (req, res, next) => {
 app.post('/additionalEntry', async (req, res, next) => {
   // to add additional info to the database for the resume
   try {
+    console.log("In Additional Entry");
     const {
       id,
     } = req.user;
     const {
-      keyWords,
       location,
-      pointForm,
+      entryType,
+      startPeriod,
+      endingPeriod,
       sectionSummary,
-      topicOfSection,
-      titleAndPosition,
+      sectionOfResume,
       subtopicOfSection,
+      topicOfSection,
     } = req.body;
     const newEntry = {
       id,
       sectionOfResume : {
-        keyWords,
         location,
-        pointType,
+        entryType,
+        startPeriod,
+        endingPeriod,
         sectionSummary,
-        topicOfSection,
-        titleAndPosition,
+        sectionOfResume,
         subtopicOfSection,
+        topicOfSection,
       },
     };
+    console.log("About to add new entry");
     const result = await addEntry(mongodb, newEntry);
     if (result.error) {
       res.status(400).send(result);

@@ -10,9 +10,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  preferredName: {
+  username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   email: {
     type: String,
@@ -36,14 +37,14 @@ const userSchema = new mongoose.Schema({
     }
   }],
   sectionOfResume: [{
-    topicOfSection: {
+    sectionOfResume: {
       type: String,
       required: true
     },
     date: {
       type: String,
     },
-    titleAndPosition: {
+    subtopicOfSection: {
       type: String
     },
     sectionSummary: [{
@@ -57,12 +58,33 @@ const userSchema = new mongoose.Schema({
     location: {
       type: String
     },
-    subtopicOfSection: {
+    topicOfSection: {
       type: String
     },
-    pointType: {
+    entryType: {
       type: String,
-      required: true
+    },
+    startPeriod: {
+      month: {
+        type: String,
+      },
+      day: {
+        type: Number,
+      },
+      year: {
+        type: Number,
+      },
+    },
+    endingPeriod: {
+      month: {
+        type: String,
+      },
+      day: {
+        type: Number,
+      },
+      year: {
+        type: Number,
+      },
     },
   },
   ]
