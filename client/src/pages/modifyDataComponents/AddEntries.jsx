@@ -5,6 +5,7 @@ import EntryForm from './entriesComponents/EntryForm'
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import uuid from 'uuid/v4';
 
 const styles = theme => ({
   root: {
@@ -19,6 +20,7 @@ class AddEntries extends Component {
       sectionSummary : [{
         experience: "",
         pointIntro: "",
+        randomKey: uuid(),
       }],
       sectionOfResume: "",
       subtopicOfSection: "",
@@ -35,6 +37,7 @@ class AddEntries extends Component {
         day: '',
         year: '',
       },
+      checkInProgress: false,
     }
   };
 
@@ -59,25 +62,27 @@ class AddEntries extends Component {
         day: '',
         year: '',
       },
+      checkInProgress: false,
     })
   }
+
   handleChange = name => event => {
-    // need to add an option to handle the start date  and figure out how to made year madatory if any change is made
-    // OR MAKE A DATE CLASS
     if ("experience" === name || "pointIntro" === name) {
       let sectionSummary = [...this.state.sectionSummary];
-      console.log(sectionSummary);
       sectionSummary[event.target.id][event.target.name] = event.target.value;
       this.setState({
         sectionSummary,
       });
-      console.log(sectionSummary);
     } else if ("startPeriod" === name || "endingPeriod" === name) {
         let tempPeriod = this.state[name];
         tempPeriod[event.target.name] = event.target.value;
         this.setState({
           [name]: tempPeriod,
         });
+    } else if ("checkInProgress" === name) {
+      this.setState({
+        checkInProgress: event.target.checked,
+      })
     } else {
       this.setState({
         [name]: event.target.value,
@@ -85,11 +90,22 @@ class AddEntries extends Component {
     }
   }
 
+  removeExp = name => event => {
+    const {
+      sectionSummary,
+    } = this.state;
+    sectionSummary.splice(name, 1);
+    console.log(sectionSummary);
+    this.setState({
+      sectionSummary,
+    })
+  }
   // will add a new entry and result in a new textfield
   addExp = event => {
     const emptyPoint = {
       experience: "",
       pointIntro: "",
+      randomKey: uuid(),
     };
     this.setState((prevState) => ({
       sectionSummary: [...prevState.sectionSummary, emptyPoint],
@@ -108,6 +124,7 @@ class AddEntries extends Component {
         entryType,
         startPeriod,
         endingPeriod,
+        checkInProgress,
       } = this.state;
       if (sectionOfResume.trim() === "") {
         return;
@@ -115,6 +132,10 @@ class AddEntries extends Component {
       // do not save other parts in the section
       if (entryType === "Paragraph") {
         sectionSummary = sectionSummary[0];
+      }
+
+      if (checkInProgress === true) {
+        endingPeriod.month = "Present";
       }
       const addNewEntry = {
         sectionSummary,
@@ -151,14 +172,15 @@ class AddEntries extends Component {
       classes
     } = this.props;
     const {
+      location,
+      entryType,
+      startPeriod,
+      endingPeriod,
+      topicOfSection,
       sectionSummary,
       sectionOfResume,
       subtopicOfSection,
-      location,
-      topicOfSection,
-      startPeriod,
-      endingPeriod,
-      entryType,
+      checkInProgress,
     } = this.state;
     return (
       <form
@@ -187,11 +209,13 @@ class AddEntries extends Component {
           entryType={entryType}
           startPeriod={startPeriod}
           endingPeriod={endingPeriod}
-          sectionSummary={sectionSummary}
-          sectionOfResume={sectionOfResume}
           topicOfSection={topicOfSection}
+          sectionSummary={sectionSummary}
+          checkInProgress={checkInProgress}
+          sectionOfResume={sectionOfResume}
           subtopicOfSection={subtopicOfSection}
           addExp={this.addExp.bind(this)}
+          removeExp={this.removeExp.bind(this)}
           handleChange={this.handleChange.bind(this)}
           handleSubmit={this.handleSubmit.bind(this)} // Will remove and have a button on top
         />

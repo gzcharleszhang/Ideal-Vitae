@@ -4,11 +4,13 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ListItems from './ListItems';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import ParagraphItem from './ParagraphItem.jsx';
+import ParagraphItem from './ParagraphItem';
+import ListItems from './ListItems';
+import DateTextFields from './DateTextFields';
+import WrapTextField from './WrapTextField';
 
 const styles = theme => ({
   container: {
@@ -27,22 +29,6 @@ const styles = theme => ({
   }
 });
 
-// import this
-const months = [
-  "",
-  "Janurary",
-  "Feburary",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-]
 
 const listOfEntryTypes = [
   "List",
@@ -52,14 +38,6 @@ const listOfEntryTypes = [
                   {option}
                 </MenuItem>
                 ));
-
-const listOfMonths = (months.map(option => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                     )));
-
-                     // TODO: EXPORT THIS
 class EntryForm extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +57,8 @@ class EntryForm extends Component {
       location,
       entryType,
       topicOfSection,
+      checkInProgress,
+      removeExp,
     } = this.props;
     return (
       <Grid
@@ -88,130 +68,60 @@ class EntryForm extends Component {
         alignItems="stretch"
         className={classes.root}
       >
-        <TextField
+        <WrapTextField
           id="sectionOfResume"
           label="Section"
           value={sectionOfResume}
-          className={classes.textField}
-          margin="normal"
-          onChange={handleChange("sectionOfResume")}
-          variant="outlined"
-          required
+          onChangeValue="sectionOfResume"
+          required={true}
+          handleChange={handleChange}
         />
-        <TextField
+        <WrapTextField
           id="topicOfSection"
           label="Topic Of Section"
           value={topicOfSection}
-          className={classes.textField}
-          margin="normal"
-          onChange={handleChange("topicOfSection")}
-          variant="outlined"
+          handleChange={handleChange}
+          onChangeValue="topicOfSection"
         />
-        <TextField
+        <WrapTextField
           id="subtopicOfSection"
           label="Subtopic Of Section"
           value={subtopicOfSection}
-          className={classes.textField}
-          margin="normal"
-          onChange={handleChange("subtopicOfSection")}
-          variant="outlined"
+          onChangeValue="subtopicOfSection"
+          handleChange={handleChange}
         />
-        <Grid
-          container
-          direction="row"
-        >
-          <TextField
-            id="startPeriod"
-            name="month"
-            label="Start Month"
-            value={startPeriod.month}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange("startPeriod")}
-            variant="outlined"
-            select
-          >
-            {listOfMonths}
-          </TextField>
-          <TextField
-            id="startPeriod"
-            name="day"
-            label="Start Day"
-            value={startPeriod.day}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange("startPeriod")}
-            variant="outlined"
-            type="number"
-          />
-          <TextField
-            id="startPeriod"
-            name="year"
-            label="Start Year"
-            value={startPeriod.year}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange("startPeriod")}
-            variant="outlined"
-            type="number"
-          />
-        </Grid>
-        <Grid
-          container
-          direction="row"
-        >
-          <TextField
-            id="endingPeriod"
-            name="month"
-            label="End Month"
-            value={endingPeriod.month}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange("endingPeriod")}
-            variant="outlined"
-            select
-          >
-            {listOfMonths}
-          </TextField>
-          <TextField
-            id="endingPeriod"
-            name="day"
-            label="End Day"
-            value={endingPeriod.day}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange("endingPeriod")}
-            variant="outlined"
-            type="number"
-          />
-          <TextField
-            id="endingPeriod"
-            name="year"
-            label="End Year"
-            value={endingPeriod.year}
-            className={classes.textField}
-            margin="normal"
-            onChange={handleChange("endingPeriod")}
-            variant="outlined"
-            type="number"
-          />
-        </Grid>
+        <DateTextFields
+          chosenPeriod="startPeriod"
+          position="Start "
+          onChangeValue="startPeriod"
+          handleChange={handleChange}
+          changedPeriod={startPeriod}
+        />
+        <DateTextFields
+          chosenPeriod="endingPeriod"
+          position="End  "
+          onChangeValue="endingPeriod"
+          handleChange={handleChange}
+          changedPeriod={endingPeriod}
+          disabled={checkInProgress}
+        />
         <FormControlLabel
           className={classes.textField}
           control={
             <Checkbox
+              checked={checkInProgress}
+              onChange={handleChange('checkInProgress')}
+              value="checkInProgress"
             />
           }
           label="Still in progress"
         />
-        <TextField
+        <WrapTextField
           id="location"
           label="Location"
           value={location}
-          className={classes.textField}
-          margin="normal"
-          onChange={handleChange("location")}
-          variant="outlined"
+          handleChange={handleChange}
+          onChangeValue="location"
         />
         <TextField
           id="entryType"
@@ -231,10 +141,13 @@ class EntryForm extends Component {
               handleChange={handleChange}
             />
         )}
-        { entryType === "List" && (
+        { (entryType === "List" || entryType === "PrefixSuffix") && (
             <ListItems
               sectionSummary={sectionSummary}
               handleChange={handleChange}
+              entryType={entryType}
+              addExp={addExp}
+              removeExp={removeExp}
             />
 
         )}
