@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import EntryForm from './entriesComponents/EntryForm'
+import EntryForm from './entriesComponents/EntryForm';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -10,6 +10,9 @@ import uuid from 'uuid/v4';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -159,7 +162,7 @@ class AddEntries extends Component {
       if (response.data.isSuccessful) {
         this.clearInformation();
       } else {
-// work in progress and check if logged in
+        // TODO: CHeck if user is still signed in / if entry is isSuccessful / if error
       }
     } catch(error) {
 
@@ -198,7 +201,6 @@ class AddEntries extends Component {
           <Button
             variant="contained"
             type="submit"
-            onClick={this.handleSubmit}
             className={classes.button}
           >
             Add Experience

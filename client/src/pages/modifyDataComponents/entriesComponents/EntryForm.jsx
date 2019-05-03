@@ -1,43 +1,26 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ParagraphItem from './ParagraphItem';
 import ListItems from './ListItems';
 import DateTextFields from './DateTextFields';
 import WrapTextField from './WrapTextField';
+import EntryTypeList from './EntryTypeList';
 
 const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  button: {
-    margin: theme.spacing.unit,
-  },
   root: {
     flexGrow: 1,
-  }
+  },
 });
 
-
-const listOfEntryTypes = [
-  "List",
-  "Paragraph",
-  "PrefixSuffix",
-].map(option => (<MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-                ));
 class EntryForm extends Component {
   constructor(props) {
     super(props);
@@ -123,18 +106,13 @@ class EntryForm extends Component {
           handleChange={handleChange}
           onChangeValue="location"
         />
-        <TextField
+        <EntryTypeList
           id="entryType"
           value={entryType}
           label="Point Format"
-          className={classes.textField}
-          margin="normal"
-          onChange={handleChange("entryType")}
-          variant="outlined"
-          select
-        >
-          {listOfEntryTypes}
-        </TextField>
+          handleChange={handleChange}
+          handleChangeValue="entryType"
+        />
         { entryType === "Paragraph" && (
             <ParagraphItem
               sectionSummary={sectionSummary}
