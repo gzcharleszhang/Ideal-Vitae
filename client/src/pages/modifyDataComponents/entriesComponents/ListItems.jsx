@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import WrapTextField from './WrapTextField';
+import WrapTextField from '../WrapTextField';
 
 const styles = theme => ({
   container: {
@@ -21,7 +21,6 @@ const styles = theme => ({
 class ListItems extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.entryType);
   }
 
   render() {
@@ -36,7 +35,7 @@ class ListItems extends Component {
     const isPrefixType = entryType === "PrefixSuffix";
     return (
       <div
-        className={classes.root}
+        className={classes.container}
       >
         <Button
           variant="contained"

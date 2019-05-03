@@ -5,7 +5,6 @@ import config from '../config/config.js';
 
 const authRegister = async (dbConn, user) => {
   try {
-    console.log(user);
     user.password = await bcrypt.hash(user.password, config.rptNumber);
     const newUser = new userSchema(user);
     const result = await newUser.save();
@@ -17,7 +16,6 @@ const authRegister = async (dbConn, user) => {
 
 const addEntry = async (dbConn, newEntry) => {
   try {
-    console.log(newEntry);
     const result = await userSchema.updateOne({ _id: newEntry.id }, { $push: {sectionOfResume: newEntry.sectionOfResume } });
     return { isSuccessful : true };
   } catch (error) {
@@ -25,4 +23,17 @@ const addEntry = async (dbConn, newEntry) => {
   }
 }
 
-export { authRegister, addEntry };
+const addContact = async (dbConn, newContact) => {
+  try {
+    const result = await userSchema.updateOne({ _id: newContact.id }, { $push: {contact: newContact.contact } });
+    return { isSuccessful : true };
+  } catch (error) {
+    return {error: error };
+  }
+}
+
+export {
+  authRegister,
+  addEntry,
+  addContact,
+};

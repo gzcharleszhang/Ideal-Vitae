@@ -22,7 +22,11 @@ const config = {
       secure: false,
     }, // since http is only currently supported
   },
-  origins: ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://localhost:3000/#/addEntry'],
+  origins: ['http://127.0.0.1:3000',
+            'http://localhost:3000',
+            'http://localhost:3000/#/addEntry',
+            'http://localhost:3000/#/additionalContact',
+          ],
 };
 
 export default config;

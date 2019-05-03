@@ -11,6 +11,10 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   button: {
     margin: theme.spacing.unit,
   },
@@ -98,7 +102,6 @@ class AddEntries extends Component {
       sectionSummary,
     } = this.state;
     sectionSummary.splice(name, 1);
-    console.log(sectionSummary);
     this.setState({
       sectionSummary,
     })
@@ -158,9 +161,10 @@ class AddEntries extends Component {
         data: addNewEntry,
         withCredentials: true,
       });
-      console.log(response);
       if (response.data.isSuccessful) {
         this.clearInformation();
+      } else if (!response.data.isAuthenticated) {
+        // TODO: redirect user to login
       } else {
         // TODO: CHeck if user is still signed in / if entry is isSuccessful / if error
       }

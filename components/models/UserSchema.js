@@ -27,14 +27,18 @@ const userSchema = new mongoose.Schema({
     type: Boolean
   },
   contact: [{
-    type: {
+    contactType: {
       type: String,
-      required: true
+      required: true,
     },
-    info: {
+    contactInfo: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+    contactRequired: {
+      type: Boolean,
+      required: true,
+    },
   }],
   sectionOfResume: [{
     sectionOfResume: {
