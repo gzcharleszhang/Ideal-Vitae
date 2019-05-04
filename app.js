@@ -118,7 +118,6 @@ app.get('/authrequired', async (req, res, next) => {
 app.post('/register', async (req, res, next) => {
   try {
     // initialize the user object to contain required credentials
-    console.log("dwdwdwd");
     const {
       email,
       lastName,
@@ -150,7 +149,6 @@ app.post('/register', async (req, res, next) => {
 app.post('/additionalEntry', async (req, res, next) => {
   // to add additional info to the database for the resume
   try {
-    console.log("In Additional Entry");
     const {
       id,
     } = req.user;
@@ -177,7 +175,6 @@ app.post('/additionalEntry', async (req, res, next) => {
         topicOfSection,
       },
     };
-    console.log("About to add new entry");
     const result = await addEntry(mongodb, newEntry);
     if (result.error) {
       res.status(400).send(result);
