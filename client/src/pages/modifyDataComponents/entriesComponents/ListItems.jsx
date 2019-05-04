@@ -21,7 +21,7 @@ const styles = theme => ({
 class ListItems extends Component {
   constructor(props) {
     super(props);
-  }
+  };
 
   render() {
     const {
@@ -32,7 +32,7 @@ class ListItems extends Component {
       handleChange,
       sectionSummary,
     } = this.props;
-    const isPrefixType = entryType === "PrefixSuffix";
+    const isPrefixType = (entryType === "PrefixSuffix");
     return (
       <div
         className={classes.container}
@@ -85,8 +85,8 @@ class ListItems extends Component {
             );
         })}
       </div>
-    );
-  }
+    )
+  };
 };
 
 ListItems.propTypes = {

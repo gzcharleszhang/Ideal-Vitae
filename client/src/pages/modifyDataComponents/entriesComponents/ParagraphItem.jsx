@@ -5,7 +5,8 @@ import WrapTextField from '../WrapTextField';
 export default class ParagraphItem extends Component {
   constructor(props) {
     super(props);
-  }
+  };
+
   render() {
     const {
       sectionSummary,
@@ -21,7 +22,7 @@ export default class ParagraphItem extends Component {
         handleChange={handleChange}
       />
     )
-  }
+  };
 };
 
 // TODO: Tab and create contact + start view entry

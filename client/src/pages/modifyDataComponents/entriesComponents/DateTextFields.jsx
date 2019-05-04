@@ -17,7 +17,7 @@ const styles = theme => ({
 class DateTextFields extends Component {
   constructor(props) {
     super(props);
-  }
+  };
 
   render() {
     const {
@@ -88,7 +88,7 @@ class DateTextFields extends Component {
         />
       </Grid>
     )
-  }
+  };
 };
 
 DateTextFields.propTypes = {

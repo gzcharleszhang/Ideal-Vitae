@@ -22,13 +22,15 @@ class AddData extends Component {
       value: 0,
     }
   };
-   handleChange = (event, value) => {
-     this.setState({ value });
-   };
 
-   handleChangeIndex = index => {
-     this.setState({ value: index });
-   };
+  handleChange = (event, value) => {
+   this.setState({ value });
+  };
+
+  handleChangeIndex = index => {
+   this.setState({ value: index });
+  };
+
   render() {
     const {
       classes,

@@ -37,4 +37,7 @@ const dayOptions = (dayList.map(option => (
 )));
 
 
-export { monthOptions, dayOptions }
+export {
+  monthOptions,
+  dayOptions,
+};

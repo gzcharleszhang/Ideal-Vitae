@@ -23,7 +23,7 @@ class AddContacts extends Component {
       contactType: '',
       checkInProgress: false,
     }
-  }
+  };
 
   clearContacts = () => {
     this.setState({
@@ -31,19 +31,19 @@ class AddContacts extends Component {
       contactType: '',
       checkInProgress: false,
     });
-  }
+  };
 
   handleChange = name => event => {
     if ("checkInProgress" === name) {
       this.setState({
         checkInProgress: event.target.checked,
-      })
+      });
     } else {
       this.setState({
         [name]: event.target.value,
       });
     }
-  }
+  };
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -56,7 +56,6 @@ class AddContacts extends Component {
       if (contactInfo.trim() === "" || contactType.trim() === "") {
         return;
       }
-
       const addNewContact = {
         contactInfo,
         contactType,
@@ -78,7 +77,7 @@ class AddContacts extends Component {
     } catch(error) {
     }
 
-  }
+  };
 
   render() {
     const {

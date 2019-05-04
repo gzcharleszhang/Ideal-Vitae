@@ -24,7 +24,7 @@ const styles = theme => ({
 class EntryForm extends Component {
   constructor(props) {
     super(props);
-  }
+  };
 
   render() {
     const {
@@ -129,9 +129,9 @@ class EntryForm extends Component {
 
         )}
       </Grid>
-    );
-  }
-}
+    )
+  };
+};
 
 EntryForm.propTypes = {
   classes: PropTypes.object.isRequired,

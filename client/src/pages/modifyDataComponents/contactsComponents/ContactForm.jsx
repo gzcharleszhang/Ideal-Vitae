@@ -19,7 +19,7 @@ const styles = theme => ({
 class ContactForm extends Component {
   constructor(props) {
     super(props);
-  }
+  };
 
   render() {
     const {
@@ -75,7 +75,7 @@ class ContactForm extends Component {
         </div>
       </Grid>
     )
-  }
+  };
 };
 
 ContactForm.propTypes = {
