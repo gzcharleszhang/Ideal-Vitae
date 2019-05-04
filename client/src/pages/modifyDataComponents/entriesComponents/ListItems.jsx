@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import uuid from 'uuid/v4';
+import WrapTextField from './WrapTextField';
 
 const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
   },
   button: {
     margin: theme.spacing.unit,
@@ -23,49 +18,69 @@ const styles = theme => ({
   }
 });
 
-class SummaryTextField extends Component {
+class ListItems extends Component {
   constructor(props) {
     super(props);
-
+    console.log(this.props.entryType);
   }
 
   render() {
     const {
+      addExp,
       classes,
-      pointType,
+      removeExp,
+      entryType,
       handleChange,
       sectionSummary,
     } = this.props;
+    const isPrefixType = entryType === "PrefixSuffix";
     return (
       <div
         className={classes.root}
       >
+        <Button
+          variant="contained"
+          onClick={addExp}
+          className={classes.button}
+          fullWidth
+        >
+          Add New Point
+        </Button>
         {sectionSummary.map((val, idx) => {
             return (
               <Grid
                 container
                 className={classes.container}
-                key={uuid()}
+                key={sectionSummary[idx].randomKey}
               >
-                { pointType === "intropoint" && (
-                  <TextField
+                { idx != 0 && (
+                  <Button
+                    variant="contained"
+                    onClick={removeExp(idx)}
+                    className={classes.button}
+                  >
+                    Delete point:
+                  </Button>
+                )}
+                { isPrefixType && (
+                  <WrapTextField
                     label="Label"
-                    name="pointIntro"
                     id={idx.toString()}
+                    name="pointIntro"
                     value={sectionSummary[idx].pointIntro}
-                    className={classes.textField}
-                    margin="normal"
-                    onChange={handleChange}
+                    onChangeValue="pointIntro"
+                    handleChange={handleChange}
                   />
                 )}
-                <TextField
+
+                <WrapTextField
                   label="Point"
                   name="experience"
                   id={idx.toString()}
                   value={sectionSummary[idx].experience}
-                  className={classes.textField}
-                  margin="normal"
-                  onChange={handleChange}
+                  handleChange={handleChange}
+                  onChangeValue="experience"
+                  fullWidth={!isPrefixType}
                 />
               </Grid>
             );
@@ -75,8 +90,8 @@ class SummaryTextField extends Component {
   }
 };
 
-SummaryTextField.propTypes = {
+ListItems.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SummaryTextField);
+export default withStyles(styles)(ListItems);

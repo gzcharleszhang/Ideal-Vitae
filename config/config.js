@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
 
-export default const config = {
+const config = {
   database: {
     connection: "mongodb+srv://simple:resume@cluster0-orevf.mongodb.net/test?retryWrites=true",
     requirements: {
@@ -24,3 +24,5 @@ export default const config = {
   },
   origins: ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://localhost:3000/#/addEntry'],
 };
+
+export default config;

@@ -13,10 +13,10 @@ import {
 const localStrategy = require('passport-local').Strategy;
 
 // config the local strategy for passport
-passport.use(new localStrategy({ usernameField: "email" },
+passport.use(new localStrategy({ usernameField: "username" },
   async (username, password, done) => {
     try {
-      const response = await userSchema.find({ email: username });
+      const response = await userSchema.find({ username });
       if (!(response && response[0])) {
         return done(null, false, { message: 'Invalid credentials.\n' });
       }
@@ -123,14 +123,14 @@ app.post('/register', async (req, res, next) => {
       lastName,
       password,
       firstName,
-      preferredName,
+      username,
     } = req.body;
     const userDetails = {
       email,
       lastName,
       password,
       firstName,
-      preferredName,
+      username,
       verified: false,
     };
     // add the information to the database
@@ -153,24 +153,26 @@ app.post('/additionalEntry', async (req, res, next) => {
       id,
     } = req.user;
     const {
-      keyWords,
       location,
-      pointForm,
+      entryType,
+      startPeriod,
+      endingPeriod,
       sectionSummary,
-      topicOfSection,
-      titleAndPosition,
+      sectionOfResume,
       subtopicOfSection,
+      topicOfSection,
     } = req.body;
     const newEntry = {
       id,
       sectionOfResume : {
-        keyWords,
         location,
-        pointType,
+        entryType,
+        startPeriod,
+        endingPeriod,
         sectionSummary,
-        topicOfSection,
-        titleAndPosition,
+        sectionOfResume,
         subtopicOfSection,
+        topicOfSection,
       },
     };
     const result = await addEntry(mongodb, newEntry);

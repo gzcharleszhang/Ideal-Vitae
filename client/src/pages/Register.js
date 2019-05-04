@@ -35,7 +35,7 @@ class Register extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      preferredName: "",
+      username: "",
       email: "",
       password: "",
       passwordCopy: "",
@@ -63,15 +63,14 @@ class Register extends Component {
     const emailRegEx = /^[\w,\d]+[\d,A-Z,a-z,_,.,-]*@[A-Z,a-z]*\.[A-Z,a-z]*$/;
     const isPasswordsSame = password === passwordCopy;
     const isPasswordProper = /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password);
-    const properEmail = email.match(emailRegEx) ? true : false;
-
+    const isEmailProper = email.match(emailRegEx) ? true : false;
     this.setState({
       isPasswordsSame,
       isPasswordProper,
-      properEmail,
+      isEmailProper,
     });
 
-    if (!(isPasswordsSame && isPasswordProper && properEmail)) {
+    if (!(isPasswordsSame && isPasswordProper && isEmailProper)) {
       return;
     }
     try {
@@ -80,14 +79,14 @@ class Register extends Component {
         email,
         firstName,
         lastName,
-        preferredName,
+        username,
         password,
       } = this.state;
       const registerInfo = {
         email,
         firstName,
         lastName,
-        preferredName,
+        username,
         password,
       };
       // post request to add the given info into the database
@@ -103,7 +102,7 @@ class Register extends Component {
         // will update the flag
         this.setState({
           registeredCorrectly: true
-        });
+        }); // CHECK IF USERNAME / EMAIL IS UNIQUE
       } else {
         alert('Issue with registration. Try again later!');
       }
@@ -120,7 +119,7 @@ class Register extends Component {
       registeredCorrectly,
       firstName,
       lastName,
-      preferredName,
+      username,
       email,
       password,
       passwordCopy,
@@ -132,7 +131,6 @@ class Register extends Component {
     if (registeredCorrectly) {
       return <Redirect to='/dashboard' />;
     }
-
     return (
       <div className="formContainer">
         <form onSubmit={this.handleSubmit} className={classes.container}>
@@ -175,9 +173,9 @@ class Register extends Component {
 
             </Grid>
             <TextField
-              id="preferredName"
-              label="Preferred Name"
-              value={preferredName}
+              id="username"
+              label="Username"
+              value={username}
               onChange={this.handleChange}
               className={classes.textField}
               margin="normal"

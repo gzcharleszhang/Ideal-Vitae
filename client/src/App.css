@@ -1,9 +1,15 @@
 .horizontalSpace {
-  flex-grow: 1
+  flex-grow: 1;
+  font-family: 'Raleway', sans-serif;
 }
 
 .pageBackground {
-  background-color: #D3D3D3;
+  background-color: #f8f9f9;
   height: inherit;
   overflow : auto;
+  font-family: inherit;
+}
+
+.newfont {
+  font-family: 'Raleway', sans-serif;
 }
