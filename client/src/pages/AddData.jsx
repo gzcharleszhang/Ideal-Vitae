@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import SwipeableViews from "react-swipeable-views";
 import Tabs from "@material-ui/core/Tabs";

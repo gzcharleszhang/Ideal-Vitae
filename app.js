@@ -10,7 +10,8 @@ import {
   authRegister,
   addEntry,
   addContact,
-} from './components/DbModifier.js';
+  getContactsEntries,
+} from './components/DbConnector.js';
 const localStrategy = require('passport-local').Strategy;
 
 // config the local strategy for passport
@@ -103,6 +104,7 @@ app.post('/login', (req, res, next) => {
         if (error) {
           return next(error);
         }
+        console.log("yayyy");
         res.status(200).send({ isAuthenticated: true });
       });
     } catch (error) {
@@ -200,7 +202,7 @@ app.post('/additionalEntry', async (req, res, next) => {
     } = req.body;
     const newEntry = {
       id,
-      sectionOfResume: {
+      resumeEntry: {
         location,
         entryType,
         startPeriod,
@@ -232,6 +234,31 @@ app.get('/generateResume', (req, res) => {
 
 app.post('*', (req, res, next) => {
   res.status(404).send({error: "Undefined endpoint was reached"});
+});
+
+app.get('/displayContactsEntries', async (req, res, next) => {
+  console.log(req.user);
+  if (!req.user) {
+    console.log("NOt logged in");
+    res.status(200).send({ isAuthenticated: false });
+    return;
+  }
+  try {
+    console.log("Horizon");
+    const {
+      id,
+    } = req.user;
+    const result = await getContactsEntries(id);
+    console.log(result);
+    if (result.error) {
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (error) {
+    console.log("eRRROrrr");
+    next(error);
+  }
 });
 
 // for now listen to local LocalHOst

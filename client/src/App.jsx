@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AddData from './pages/AddData';
+import DisplayData from './pages/DisplayData';
 
 
 
@@ -36,6 +37,10 @@ export default class App extends Component {
             <Route
               path="/dashboard"
               component={Dashboard}
+            />
+            <Route
+              path="/displayData"
+              component={DisplayData}
             />
           </div>
         </HashRouter>
