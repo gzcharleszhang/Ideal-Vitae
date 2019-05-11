@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import ViewEntriesList from './entriesComponents/ViewEntriesList'
 
 const styles = theme => ({
   root: {
@@ -16,14 +17,19 @@ const styles = theme => ({
   },
 });
 
-class DisplayEntries extends Component {
+export default class DisplayEntries extends Component {
   constructor(props) {
     super(props);
   };
 
   render() {
-    retrun (
-      
+    const {
+      resumeEntry,
+    } = this.props;
+    return (
+      <ViewEntriesList
+        resumeEntry={resumeEntry}
+      />
     )
   };
 };

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ViewListItems from './ViewListItems';
+import ViewDate from './ViewDate'
 import './EntriesItem.css'
 
 const styles = theme => ({
@@ -49,13 +50,16 @@ class ViewEntriesItem extends Component {
           <h2>Section: {sectionOfResume} </h2>
           <h2>Topic: {topicOfSection} </h2>
           <h2>Subtopic: {subtopicOfSection}</h2>
-          <h2>Date: {/*Date*/}</h2>
+          <ViewDate
+            startPeriod={startPeriod}
+            endingPeriod={endingPeriod}
+          />
           <h2>Location: {location}</h2>
           <h2>Entries: </h2>
           { entryType === "Paragraph" && (
             <h2> {sectionSummary[0].experience} </h2>
           )}
-          { entryType === "PrefixSuffix" && (
+          { entryType === "PrefixSuffix" || entryType === "List" && (
             <ViewListItems
               entryType={entryType}
               sectionSummary={sectionSummary}

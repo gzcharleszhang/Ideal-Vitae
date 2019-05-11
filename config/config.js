@@ -26,6 +26,7 @@ const config = {
             'http://localhost:3000',
             'http://localhost:3000/#/addEntry',
             'http://localhost:3000/#/additionalContact',
+            'http://localhost:3000/#/displayData',
           ],
 };
 

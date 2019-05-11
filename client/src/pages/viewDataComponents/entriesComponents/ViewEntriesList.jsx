@@ -34,16 +34,6 @@ class ViewEntriesList extends Component {
       classes,
       resumeEntry,
     } = this.props;
-    const sectionSummary = [
-      {
-        pointIntro: "wdwdw",
-        experience: " forever rever forever",
-      },
-      {
-        pointIntro: "Proficient in",
-        experience: " SQL, MongoDB, C++, Python",
-      },
-    ];
     return (
       <List className={classes.root} subheader={<li />}>
       {resumeEntry.map((val, idx) => {
@@ -61,8 +51,8 @@ class ViewEntriesList extends Component {
         return (
           <ListItem key={`item-${_id}`}>
             <ViewEntriesItem
-              startPeriod="s"
-              endingPeriod="dwdwdwd"
+              startPeriod={startPeriod}
+              endingPeriod={endingPeriod}
               sectionSummary={sectionSummary}
               sectionOfResume={sectionOfResume}
               subtopicOfSection={subtopicOfSection}

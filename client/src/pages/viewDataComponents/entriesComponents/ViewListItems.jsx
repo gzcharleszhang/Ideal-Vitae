@@ -10,9 +10,6 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  button: {
-    margin: theme.spacing.unit,
-  },
   root: {
     flexGrow: 1,
   }
@@ -34,21 +31,21 @@ class ViewListItems extends Component {
       <div
         className={classes.root}
       >
+      <ul>
         {sectionSummary.map((val, idx) => {
             return (
-              <Grid
-                container
-                direction="row"
+              <div
                 className={classes.container}
-                key={idx}
               >
-                { isPrefixType && (
-                  <h2>{sectionSummary[idx].pointIntro}</h2>
-                )}
-                <h2>{sectionSummary[idx].experience}</h2>
-              </Grid>
+                <li
+                  key={idx}
+                >
+                {isPrefixType && sectionSummary[idx].pointIntro}   {sectionSummary[idx].experience}
+                </li>
+              </div>
             );
         })}
+      </ul>
       </div>
     )
   };

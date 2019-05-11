@@ -104,7 +104,6 @@ app.post('/login', (req, res, next) => {
         if (error) {
           return next(error);
         }
-        console.log("yayyy");
         res.status(200).send({ isAuthenticated: true });
       });
     } catch (error) {
@@ -237,26 +236,21 @@ app.post('*', (req, res, next) => {
 });
 
 app.get('/displayContactsEntries', async (req, res, next) => {
-  console.log(req.user);
   if (!req.user) {
-    console.log("NOt logged in");
     res.status(200).send({ isAuthenticated: false });
     return;
   }
   try {
-    console.log("Horizon");
     const {
       id,
     } = req.user;
     const result = await getContactsEntries(id);
-    console.log(result);
     if (result.error) {
       res.status(400).send(result);
     } else {
       res.status(200).send(result);
     }
   } catch (error) {
-    console.log("eRRROrrr");
     next(error);
   }
 });

@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
       required: true,
     },
   }],
-  sectionOfResume: [{
+  resumeEntry: [{
     sectionOfResume: {
       type: String,
       required: true

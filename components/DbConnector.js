@@ -16,7 +16,7 @@ const authRegister = async (dbConn, user) => {
 
 const addEntry = async (dbConn, newEntry) => {
   try {
-    const result = await userSchema.updateOne({ _id: newEntry.id }, { $push: {sectionOfResume: newEntry.sectionOfResume } });
+    const result = await userSchema.updateOne({ _id: newEntry.id }, { $push: {resumeEntry: newEntry.resumeEntry } });
     return { isSuccessful : true };
   } catch (error) {
     return { error: error };
@@ -28,7 +28,27 @@ const addContact = async (dbConn, newContact) => {
     const result = await userSchema.updateOne({ _id: newContact.id }, { $push: {contact: newContact.contact } });
     return { isSuccessful : true };
   } catch (error) {
-    return {error: error };
+    return { error: error };
+  }
+}
+
+const getContactsEntries = async (id) => {
+  try {
+    const result = await userSchema.find({_id: id});
+    if (!(result && result[0])) {
+      return { error: "No such user in the database!" };
+    }
+
+    const {
+      contact,
+      resumeEntry,
+    } = result[0];
+    return ({
+      contact,
+      resumeEntry,
+    });
+  } catch (error) {
+    return { error: error }
   }
 }
 
@@ -36,4 +56,5 @@ export {
   authRegister,
   addEntry,
   addContact,
+  getContactsEntries,
 };
