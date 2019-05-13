@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import WrapTextField from '../WrapTextField';
+import WrapTextField from '../../WrapTextField';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';

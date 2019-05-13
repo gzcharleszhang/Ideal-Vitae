@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import WrapTextField from '../WrapTextField';
+import WrapTextField from '../../WrapTextField';
 
 export default class ParagraphItem extends Component {
   constructor(props) {

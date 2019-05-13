@@ -12,7 +12,8 @@ import {
 import AddData from './pages/AddData';
 import DisplayData from './pages/DisplayData';
 import Dashboard from './pages/Dashboard';
-import './menu.css';
+import './menu.css'
+
 
 export default class AppMenu extends Component {
   constructor(props) {

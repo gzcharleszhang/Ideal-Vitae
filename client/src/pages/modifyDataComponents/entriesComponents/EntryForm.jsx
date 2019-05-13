@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ParagraphItem from './ParagraphItem';
 import ListItems from './ListItems';
 import DateTextFields from './DateTextFields';
-import WrapTextField from '../WrapTextField';
+import WrapTextField from '../../WrapTextField';
 import EntryTypeList from './EntryTypeList';
 
 const styles = theme => ({
