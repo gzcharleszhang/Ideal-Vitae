@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import userSchema from './models/UserSchema.js';
 import config from '../config/config.js';
 
-const authRegister = async (dbConn, user) => {
+const authRegister = async (user) => {
   try {
     user.password = await bcrypt.hash(user.password, config.rptNumber);
     const newUser = new userSchema(user);
@@ -14,7 +14,7 @@ const authRegister = async (dbConn, user) => {
   }
 }
 
-const addEntry = async (dbConn, newEntry) => {
+const addEntry = async (newEntry) => {
   try {
     const result = await userSchema.updateOne({ _id: newEntry.id }, { $push: {sectionOfResume: newEntry.sectionOfResume } });
     return { isSuccessful : true };
@@ -23,7 +23,7 @@ const addEntry = async (dbConn, newEntry) => {
   }
 }
 
-const addContact = async (dbConn, newContact) => {
+const addContact = async (newContact) => {
   try {
     const result = await userSchema.updateOne({ _id: newContact.id }, { $push: {contact: newContact.contact } });
     return { isSuccessful : true };

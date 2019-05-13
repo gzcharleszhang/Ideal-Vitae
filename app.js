@@ -130,7 +130,7 @@ app.post('/register', async (req, res, next) => {
       verified: false,
     };
     // add the information to the database
-    const result = await authRegister(mongodb, userDetails);
+    const result = await authRegister(userDetails);
     // check to see if the user has been registered
     if (result.error) {
       res.status(400).send(result);
@@ -166,14 +166,14 @@ app.post('/additionalContact', async (req, res, next) => {
         checkInProgress,
       },
     };
-    const result = await addContact(mongodb, newContact);
+    const result = await addContact(newContact);
     if (result.error) {
       res.status(400).send(result);
     } else {
       res.status(200).send(result);
     }
   } catch (error) {
-
+    next(error);
   }
 
 });
@@ -211,7 +211,7 @@ app.post('/additionalEntry', async (req, res, next) => {
         topicOfSection,
       },
     };
-    const result = await addEntry(mongodb, newEntry);
+    const result = await addEntry(newEntry);
     if (result.error) {
       res.status(400).send(result);
     } else {
