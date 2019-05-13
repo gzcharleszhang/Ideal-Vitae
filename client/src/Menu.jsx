@@ -16,6 +16,9 @@ import Dashboard from './pages/Dashboard';
 import './menu.css';
 =======
 import './menu.css'
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
