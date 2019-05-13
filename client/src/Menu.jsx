@@ -12,7 +12,11 @@ import {
 import AddData from './pages/AddData';
 import DisplayData from './pages/DisplayData';
 import Dashboard from './pages/Dashboard';
+<<<<<<< Updated upstream
 import './menu.css';
+=======
+import './menu.css'
+>>>>>>> Stashed changes
 
 
 export default class AppMenu extends Component {
