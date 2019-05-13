@@ -9,6 +9,7 @@ import config from './config/config.js';
 import {
   authRegister,
   addEntry,
+  addContact,
 } from './components/DbModifier.js';
 const localStrategy = require('passport-local').Strategy;
 
@@ -85,10 +86,13 @@ app.use(function(req, res, next) {
   return next();
 });
 
-// routes
 app.post('/login', (req, res, next) => {
   // TODO checked if already logged in?
   // standard passportjs custom callback login
+  if (req.user) {
+    res.status(200).send({ isAuthenticated: true });
+    return;
+  }
   passport.authenticate('local', async (error, user, info) => {
     try {
       // check for issues
@@ -105,14 +109,6 @@ app.post('/login', (req, res, next) => {
       return next(error);
     }
   })(req, res, next);
-});
-
-app.get('/authrequired', async (req, res, next) => {
-  if (req.user) {
-    res.status(200).send({ isAuthenticated: true });
-    return;
-  }
-  res.status(400).send({ isAuthenticated: false });
 });
 
 app.post('/register', async (req, res, next) => {
@@ -134,7 +130,7 @@ app.post('/register', async (req, res, next) => {
       verified: false,
     };
     // add the information to the database
-    const result = await authRegister(mongodb, userDetails);
+    const result = await authRegister(userDetails);
     // check to see if the user has been registered
     if (result.error) {
       res.status(400).send(result);
@@ -146,8 +142,48 @@ app.post('/register', async (req, res, next) => {
   }
 });
 
+app.post('/additionalContact', async (req, res, next) => {
+  if (!req.user) {
+    res.status(200).send({ isAuthenticated: false });
+    return;
+  }
+  // to add additional info to the database for the resume
+  try {
+    const {
+      id,
+    } = req.user;
+    const {
+      contactInfo,
+      contactType,
+      checkInProgress,
+    } = req.body;
+    //create entry and copy function
+    const newContact = {
+      id,
+      contact: {
+        contactType,
+        contactInfo,
+        checkInProgress,
+      },
+    };
+    const result = await addContact(newContact);
+    if (result.error) {
+      res.status(400).send(result);
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (error) {
+    next(error);
+  }
+
+});
+
 app.post('/additionalEntry', async (req, res, next) => {
   // to add additional info to the database for the resume
+  if (!req.user) {
+    res.status(200).send({ isAuthenticated: false });
+    return;
+  }
   try {
     const {
       id,
@@ -164,7 +200,7 @@ app.post('/additionalEntry', async (req, res, next) => {
     } = req.body;
     const newEntry = {
       id,
-      sectionOfResume : {
+      sectionOfResume: {
         location,
         entryType,
         startPeriod,
@@ -175,7 +211,7 @@ app.post('/additionalEntry', async (req, res, next) => {
         topicOfSection,
       },
     };
-    const result = await addEntry(mongodb, newEntry);
+    const result = await addEntry(newEntry);
     if (result.error) {
       res.status(400).send(result);
     } else {

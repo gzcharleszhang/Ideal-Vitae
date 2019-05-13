@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import ParagraphItem from './ParagraphItem';
 import ListItems from './ListItems';
 import DateTextFields from './DateTextFields';
-import WrapTextField from './WrapTextField';
+import WrapTextField from '../WrapTextField';
 import EntryTypeList from './EntryTypeList';
 
 const styles = theme => ({
@@ -24,7 +24,7 @@ const styles = theme => ({
 class EntryForm extends Component {
   constructor(props) {
     super(props);
-  }
+  };
 
   render() {
     const {
@@ -89,7 +89,6 @@ class EntryForm extends Component {
           disabled={checkInProgress}
         />
         <FormControlLabel
-          className={classes.textField}
           control={
             <Checkbox
               checked={checkInProgress}
@@ -130,9 +129,9 @@ class EntryForm extends Component {
 
         )}
       </Grid>
-    );
-  }
-}
+    )
+  };
+};
 
 EntryForm.propTypes = {
   classes: PropTypes.object.isRequired,

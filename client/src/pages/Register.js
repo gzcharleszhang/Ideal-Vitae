@@ -96,7 +96,6 @@ class Register extends Component {
         data: registerInfo,
         withCredentials: true,
       });
-      console.log(response);
       // verifies if the registration was successful
       if (response.data.isRegistered) {
         // will update the flag

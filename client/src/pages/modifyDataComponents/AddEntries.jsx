@@ -7,9 +7,14 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import uuid from 'uuid/v4';
 
+// TODO: remove empty entries except first
 const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   button: {
     margin: theme.spacing.unit,
@@ -66,8 +71,8 @@ class AddEntries extends Component {
         year: '',
       },
       checkInProgress: false,
-    })
-  }
+    });
+  };
 
   handleChange = name => event => {
     if ("experience" === name || "pointIntro" === name) {
@@ -91,18 +96,17 @@ class AddEntries extends Component {
         [name]: event.target.value,
       });
     }
-  }
+  };
 
   removeExp = name => event => {
     const {
       sectionSummary,
     } = this.state;
     sectionSummary.splice(name, 1);
-    console.log(sectionSummary);
     this.setState({
       sectionSummary,
     })
-  }
+  };
   // will add a new entry and result in a new textfield
   addExp = event => {
     const emptyPoint = {
@@ -113,7 +117,7 @@ class AddEntries extends Component {
     this.setState((prevState) => ({
       sectionSummary: [...prevState.sectionSummary, emptyPoint],
     }));
-  }
+  };
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -129,14 +133,10 @@ class AddEntries extends Component {
         endingPeriod,
         checkInProgress,
       } = this.state;
-      if (sectionOfResume.trim() === "") {
-        return;
-      }
       // do not save other parts in the section
       if (entryType === "Paragraph") {
-        sectionSummary = sectionSummary[0];
+        sectionSummary.splice(1);
       }
-
       if (checkInProgress === true) {
         endingPeriod.month = "Present";
       }
@@ -151,16 +151,17 @@ class AddEntries extends Component {
         endingPeriod,
       }
 
-      // TODO: MAKE SURE IT'S ONLY NUMBERS OR CHANGE HOW IT WORKS CURRENTLY
+        // TODO: MAKE SURE IT'S ONLY NUMBERS OR CHANGE HOW IT WORKS CURRENTLY
       const response = await axios({
         method: 'post',
         url: 'http://127.0.0.1:2002/additionalEntry',
         data: addNewEntry,
         withCredentials: true,
       });
-      console.log(response);
       if (response.data.isSuccessful) {
         this.clearInformation();
+      } else if (!response.data.isAuthenticated) {
+        // TODO: redirect user to login
       } else {
         // TODO: CHeck if user is still signed in / if entry is isSuccessful / if error
       }
@@ -168,7 +169,7 @@ class AddEntries extends Component {
 
     }
 
-  }
+  };
 
   render() {
     const {
@@ -207,8 +208,8 @@ class AddEntries extends Component {
           </Button>
         </Grid>
         <EntryForm
-          location={location}
           entryType={entryType}
+          location={location}
           startPeriod={startPeriod}
           endingPeriod={endingPeriod}
           topicOfSection={topicOfSection}

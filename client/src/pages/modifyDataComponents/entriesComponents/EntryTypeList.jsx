@@ -26,7 +26,7 @@ const styles = theme => ({
 class EntryTypeList extends Component {
   constructor(props) {
     super(props);
-  }
+  };
 
   render() {
     const {
@@ -54,7 +54,7 @@ class EntryTypeList extends Component {
         {listOfEntryTypes}
       </TextField>
     )
-  }
+  };
 };
 
 EntryTypeList.propTypes = {
