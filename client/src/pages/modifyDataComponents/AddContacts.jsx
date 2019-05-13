@@ -53,9 +53,6 @@ class AddContacts extends Component {
         contactType,
         checkInProgress,
       } = this.state;
-      if (contactInfo.trim() === "" || contactType.trim() === "") {
-        return;
-      }
       const addNewContact = {
         contactInfo,
         contactType,
