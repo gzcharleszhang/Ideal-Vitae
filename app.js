@@ -34,7 +34,7 @@ passport.use(new localStrategy({ usernameField: "username" },
       return done(error);
     }
   }
-))
+));
 
 // passport will store the serialized info in the cookies
 passport.serializeUser((user, done) => {
@@ -174,7 +174,6 @@ app.post('/additionalContact', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
 });
 
 app.post('/additionalEntry', async (req, res, next) => {

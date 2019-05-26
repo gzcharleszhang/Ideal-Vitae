@@ -12,7 +12,7 @@ const authRegister = async (user) => {
   } catch (error) {
     return { error: error };
   }
-}
+};
 
 const addEntry = async (newEntry) => {
   try {
@@ -21,7 +21,7 @@ const addEntry = async (newEntry) => {
   } catch (error) {
     return { error: error };
   }
-}
+};
 
 const addContact = async (newContact) => {
   try {
@@ -30,7 +30,7 @@ const addContact = async (newContact) => {
   } catch (error) {
     return { error: error };
   }
-}
+};
 
 const getContactsEntries = async (id) => {
   try {
@@ -50,7 +50,7 @@ const getContactsEntries = async (id) => {
   } catch (error) {
     return { error: error }
   }
-}
+};
 
 export {
   authRegister,
