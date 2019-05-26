@@ -27,6 +27,7 @@ class WrapTextField extends Component {
       required,
       handleChange,
       fullWidth,
+      type,
     } = this.props;
     return (
       <TextField
@@ -43,6 +44,7 @@ class WrapTextField extends Component {
         }}
         required={required}
         fullWidth={fullWidth}
+        type={type}
       />
     );
   }

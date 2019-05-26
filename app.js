@@ -88,8 +88,6 @@ app.use(function(req, res, next) {
 });
 
 app.post('/login', (req, res, next) => {
-  // TODO checked if already logged in?
-  // standard passportjs custom callback login
   if (req.user) {
     res.status(200).send({ isAuthenticated: true });
     return;
