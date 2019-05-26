@@ -21,8 +21,8 @@ class DisplayData extends Component {
       value: 0,
       resumeEntry: [],
       contact: [],
-    }
-  };
+    };
+  }
 
   componentDidMount() {
     axios({
@@ -32,7 +32,7 @@ class DisplayData extends Component {
     })
     .then((response) => {
       if (response.data.isAuthenticated === false) {
-
+        // redirect them
       }
       const {
         contact,
@@ -46,15 +46,15 @@ class DisplayData extends Component {
     .catch((error) => {
       console.log(error);
     });
-  };
+  }
 
   handleChange = (event, value) => {
    this.setState({ value });
-  };
+  }
 
   handleChangeIndex = index => {
    this.setState({ value: index });
-  };
+  }
 
   render() {
     const {
@@ -91,9 +91,9 @@ class DisplayData extends Component {
           </SwipeableViews>
         </div>
       </div>
-    )
-  };
-};
+    );
+  }
+}
 
 DisplayData.propTypes = {
   classes: PropTypes.object.isRequired,

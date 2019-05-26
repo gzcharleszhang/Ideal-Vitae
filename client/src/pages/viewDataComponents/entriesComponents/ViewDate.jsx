@@ -19,7 +19,7 @@ export default class ViewDate extends Component {
       dateString += dateObj.year;
     }
     return dateString;
-  };
+  }
 
   render() {
     const {
@@ -30,6 +30,6 @@ export default class ViewDate extends Component {
     const startPeriodString = this.convertDates(startPeriod);
     return (
         <h2>Date: {startPeriodString} {(endPeriodString.trim() != "" && startPeriodString.trim() != "") && `-`}  {endPeriodString}</h2>
-    )
-  };
-};
+    );
+  }
+}

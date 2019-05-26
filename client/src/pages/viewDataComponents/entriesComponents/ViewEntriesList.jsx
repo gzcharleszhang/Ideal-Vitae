@@ -26,8 +26,7 @@ const styles = theme => ({
 class ViewEntriesList extends Component {
   constructor(props) {
     super(props);
-
-  };
+  }
 
   render() {
     const {
@@ -61,12 +60,12 @@ class ViewEntriesList extends Component {
               topicOfSection={topicOfSection}
             />
           </ListItem>
-          )
-        })}
+        );
+      })}
       </List>
     );
-  };
-};
+  }
+}
 
 ViewEntriesList.propTypes = {
   classes: PropTypes.object.isRequired

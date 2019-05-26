@@ -20,7 +20,7 @@ const styles = theme => ({
 export default class DisplayEntries extends Component {
   constructor(props) {
     super(props);
-  };
+  }
 
   render() {
     const {
@@ -30,6 +30,6 @@ export default class DisplayEntries extends Component {
       <ViewEntriesList
         resumeEntry={resumeEntry}
       />
-    )
-  };
-};
+    );
+  }
+}

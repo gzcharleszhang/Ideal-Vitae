@@ -21,7 +21,7 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-  }
+  }.
 });
 
 class RegisterForm extends Component {
@@ -39,13 +39,13 @@ class RegisterForm extends Component {
       isPasswordProper: true,
       isPasswordsSame: true,
     };
-  };
+  }
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
-  };
+  }
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -54,6 +54,7 @@ class RegisterForm extends Component {
       password,
       passwordCopy,
     } = this.state;
+
     // regex to verify if email follows standard email format + password to have at least one capital, lowercase, and number
     const emailRegEx = /^[\w,\d]+[\d,A-Z,a-z,_,.,-]*@[A-Z,a-z]*\.[A-Z,a-z]*$/;
     const isPasswordsSame = password === passwordCopy;
@@ -104,7 +105,7 @@ class RegisterForm extends Component {
     } catch (error) {
       alert(`There has been an error! Error: ${error}  Please try again later!`);
     }
-  };
+  }
 
   render() {
     const {
@@ -123,7 +124,7 @@ class RegisterForm extends Component {
       isEmailProper,
     } = this.state;
     if (registeredCorrectly) {
-      return <Redirect to='/dashboard' />;
+      return <Redirect to='/login' />;
     }
     return (
       <form onSubmit={this.handleSubmit.bind(this)} className={classes.container}>
@@ -205,8 +206,8 @@ class RegisterForm extends Component {
         </Grid>
       </form>
     );
-  };
-};
+  }
+}
 
 RegisterForm.propTypes = {
   classes: PropTypes.object.isRequired,

@@ -15,13 +15,13 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-  }
+  },
 });
 
 class ListItems extends Component {
   constructor(props) {
     super(props);
-  };
+  }
 
   render() {
     const {
@@ -85,9 +85,9 @@ class ListItems extends Component {
             );
         })}
       </div>
-    )
-  };
-};
+    );
+  }
+}
 
 ListItems.propTypes = {
   classes: PropTypes.object.isRequired,

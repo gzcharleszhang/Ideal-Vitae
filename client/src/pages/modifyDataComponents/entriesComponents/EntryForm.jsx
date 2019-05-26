@@ -24,7 +24,7 @@ const styles = theme => ({
 class EntryForm extends Component {
   constructor(props) {
     super(props);
-  };
+  }
 
   render() {
     const {
@@ -126,12 +126,11 @@ class EntryForm extends Component {
               addExp={addExp}
               removeExp={removeExp}
             />
-
         )}
       </Grid>
-    )
-  };
-};
+    );
+  }
+}
 
 EntryForm.propTypes = {
   classes: PropTypes.object.isRequired,

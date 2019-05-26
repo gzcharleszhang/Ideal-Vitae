@@ -20,15 +20,15 @@ class AddData extends Component {
     this.state = {
       value: 0,
     }
-  };
+  }
 
   handleChange = (event, value) => {
    this.setState({ value });
-  };
+  }
 
   handleChangeIndex = index => {
    this.setState({ value: index });
-  };
+  }
 
   render() {
     const {
@@ -60,9 +60,9 @@ class AddData extends Component {
           </SwipeableViews>
         </div>
       </div>
-    )
-  };
-};
+    );
+  }
+}
 
 AddData.propTypes = {
   classes: PropTypes.object.isRequired,

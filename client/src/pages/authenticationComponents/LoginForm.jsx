@@ -19,7 +19,7 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-  }
+  },
 });
 
 class LoginForm extends Component {
@@ -30,13 +30,13 @@ class LoginForm extends Component {
       password: "",
       verified: false,
     };
-  };
+  }
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
-  };
+  }
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -67,7 +67,7 @@ class LoginForm extends Component {
     } catch (error) {
       alert(`There has been an error! Error: ${error}  Please try again later!`);
     }
-  };
+  }
 
   render() {
     const {
@@ -122,8 +122,8 @@ class LoginForm extends Component {
         </Grid>
       </form>
     );
-  };
-};
+  }
+}
 
 LoginForm.propTypes = {
   classes: PropTypes.object.isRequired,

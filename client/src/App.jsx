@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AppMenu from './Menu'
+import AppMenu from './Menu';
 import {
   HashRouter,
   Route,
@@ -10,8 +10,6 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AddData from './pages/AddData';
 import DisplayData from './pages/DisplayData';
-
-
 
 export default class App extends Component {
   render() {
@@ -45,6 +43,6 @@ export default class App extends Component {
           </div>
         </HashRouter>
       </div>
-    )
+    );
   }
-};
+}

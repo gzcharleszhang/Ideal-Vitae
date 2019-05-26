@@ -20,8 +20,7 @@ const styles = theme => ({
 class ViewEntriesItem extends Component {
   constructor(props) {
     super(props);
-
-  };
+  }
 
   render() {
     const {
@@ -67,9 +66,9 @@ class ViewEntriesItem extends Component {
           )}
         </Grid>
       </Button>
-    )
-  };
-};
+    );
+  }
+}
 
 ViewEntriesItem.propTypes = {
   classes: PropTypes.object.isRequired,

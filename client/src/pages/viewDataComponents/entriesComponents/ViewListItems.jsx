@@ -11,13 +11,13 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-  }
+  },
 });
 
 class ViewListItems extends Component {
   constructor(props) {
     super(props);
-  };
+  }
 
   render() {
     const {
@@ -39,6 +39,7 @@ class ViewListItems extends Component {
                 <li
                   key={idx}
                 >
+                {/* TODO: Change the format*/}
                 {isPrefixType && sectionSummary[idx].pointIntro}   {sectionSummary[idx].experience}
                 </li>
               </div>
@@ -46,9 +47,9 @@ class ViewListItems extends Component {
         })}
       </ul>
       </div>
-    )
-  };
-};
+    );
+  }
+}
 
 ViewListItems.propTypes = {
   classes: PropTypes.object.isRequired,

@@ -46,8 +46,8 @@ class AddEntries extends Component {
         year: '',
       },
       checkInProgress: false,
-    }
-  };
+    };
+  }
 
   clearInformation = () => {
     this.setState({
@@ -72,7 +72,7 @@ class AddEntries extends Component {
       },
       checkInProgress: false,
     });
-  };
+  }
 
   handleChange = name => event => {
     if ("experience" === name || "pointIntro" === name) {
@@ -96,7 +96,7 @@ class AddEntries extends Component {
         [name]: event.target.value,
       });
     }
-  };
+  }
 
   removeExp = name => event => {
     const {
@@ -106,7 +106,7 @@ class AddEntries extends Component {
     this.setState({
       sectionSummary,
     })
-  };
+  }
   // will add a new entry and result in a new textfield
   addExp = event => {
     const emptyPoint = {
@@ -117,7 +117,7 @@ class AddEntries extends Component {
     this.setState((prevState) => ({
       sectionSummary: [...prevState.sectionSummary, emptyPoint],
     }));
-  };
+  }
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -140,6 +140,7 @@ class AddEntries extends Component {
       if (checkInProgress === true) {
         endingPeriod.month = "Present";
       }
+
       const addNewEntry = {
         sectionSummary,
         sectionOfResume,
@@ -149,9 +150,7 @@ class AddEntries extends Component {
         entryType,
         startPeriod,
         endingPeriod,
-      }
-
-        // TODO: MAKE SURE IT'S ONLY NUMBERS OR CHANGE HOW IT WORKS CURRENTLY
+      };
       const response = await axios({
         method: 'post',
         url: 'http://127.0.0.1:2002/additionalEntry',
@@ -168,8 +167,7 @@ class AddEntries extends Component {
     } catch(error) {
 
     }
-
-  };
+  }
 
   render() {
     const {
@@ -223,9 +221,9 @@ class AddEntries extends Component {
           handleSubmit={this.handleSubmit.bind(this)} // Will remove and have a button on top
         />
       </form>
-    )
-  };
-};
+    );
+  }
+}
 
 
 AddEntries.propTypes = {
