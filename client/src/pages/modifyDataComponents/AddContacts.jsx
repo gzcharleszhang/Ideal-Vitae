@@ -79,10 +79,12 @@ class AddContacts extends Component {
   render() {
     const {
       classes,
+    } = this.props;
+    const {
       contactInfo,
       contactType,
       checkInProgress,
-    } = this.props;
+    } = this.state;
     return (
       <form
         onSubmit={this.handleSubmit}

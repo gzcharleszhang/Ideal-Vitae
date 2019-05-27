@@ -87,7 +87,7 @@ class DisplayData extends Component {
             <DisplayEntries
               resumeEntry={resumeEntry}
             />
-            <h1>wdwdw</h1>
+            <h1>WIP</h1>
           </SwipeableViews>
         </div>
       </div>
