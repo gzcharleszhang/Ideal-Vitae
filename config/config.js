@@ -1,8 +1,9 @@
 import uuid from 'uuid/v4';
+import unknown from './unknown.js';
 
 const config = {
   database: {
-    connection: "mongodb+srv://simple:resume@cluster0-orevf.mongodb.net/test?retryWrites=true",
+    connection: `mongodb+srv://${unknown.username}:${unknown.password}@cluster0-orevf.mongodb.net/test?retryWrites=true`,
     requirements: {
       useNewUrlParser: true,
       useFindAndModify: false,
@@ -15,18 +16,19 @@ const config = {
     genid: (req) => {
       return uuid();
     },
-    secret: 'Ful15tacKav3nture93jJEJNF9WNAKNFAEFA8FE9EE2nfejnf8w', // random
+    secret: unknown.secret, // Will Change Later
     resave: false,
     saveUninitialized: false,
     cookies: {
       secure: false,
     }, // since http is only currently supported
   },
-  origins: ['http://127.0.0.1:3000',
-            'http://localhost:3000',
-            'http://localhost:3000/#/addEntry',
-            'http://localhost:3000/#/additionalContact',
-          ],
+  origins: [
+    `${unknown.url}`,
+    `${unknown.url}/#/addEntry`,
+    `${unknown.url}/#/additionalContact`,
+    `${unknown.url}/#/displayData`,
+  ],
 };
 
 export default config;

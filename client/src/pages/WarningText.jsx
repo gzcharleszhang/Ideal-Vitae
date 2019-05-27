@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import './warningText.css'
+import './warningText.css';
 
 export default class WarningText extends Component {
     constructor(props) {
         super(props);
-    };
+    }
 
     render() {
       const chosenClass = this.props.issue ? "issue notice" : "notice";
@@ -16,6 +16,6 @@ export default class WarningText extends Component {
                   *** Please fill this correctly. {this.props.rules}! ***
                 </h1>
             </div>
-        )
+        );
     }
 }

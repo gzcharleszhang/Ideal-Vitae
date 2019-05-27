@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +10,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import AddData from './pages/AddData';
+import DisplayData from './pages/DisplayData';
 import Dashboard from './pages/Dashboard';
 import './menu.css';
 
@@ -64,13 +64,19 @@ export default class AppMenu extends Component {
                   to="/dashboard"
                   component={Dashboard}
                 >
-                  <MenuItem>Dashboard</MenuItem>
+                  <Button>Dashboard</Button>
                 </NavLink>
                 <NavLink
                   to="/addData"
                   component={AddData}
                 >
-                  <MenuItem>Add Data</MenuItem>
+                  <Button>Add Data</Button>
+                </NavLink>
+                <NavLink
+                  to="/displayData"
+                  component={DisplayData}
+                >
+                  <Button>Display Data</Button>
                 </NavLink>
                </Menu>
               </div>

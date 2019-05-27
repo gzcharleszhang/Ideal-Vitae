@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import WrapTextField from '../WrapTextField';
+import WrapTextField from '../../WrapTextField';
 
 export default class ParagraphItem extends Component {
   constructor(props) {
     super(props);
-  };
+  }
 
   render() {
     const {
@@ -21,12 +21,6 @@ export default class ParagraphItem extends Component {
         onChangeValue="experience"
         handleChange={handleChange}
       />
-    )
-  };
-};
-
-// TODO: Tab and create contact + start view entry
-// TODO: Make this box bigger
-// TODO: Login and Register should be broken down
-
-// TODO: More point Format
+    );
+  }
+}

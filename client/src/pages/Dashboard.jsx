@@ -54,9 +54,9 @@ class Dashboard extends Component {
           </Button>
         </Grid>
       </div>
-    )
+    );
   }
-};
+}
 
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
