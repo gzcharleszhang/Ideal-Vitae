@@ -14,13 +14,6 @@ const styles = theme => ({
     overflow: "auto",
     maxHeight: 500,
   },
-  listSection: {
-    backgroundColor: "inherit",
-  },
-  ul: {
-    backgroundColor: "inherit",
-    padding: 0,
-  },
 });
 
 class ViewEntriesList extends Component {

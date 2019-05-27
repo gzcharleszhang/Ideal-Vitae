@@ -8,10 +8,6 @@ import ViewDate from './ViewDate'
 import './EntriesItem.css'
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
   root: {
     flexGrow: 1,
   },
